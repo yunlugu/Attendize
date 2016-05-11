@@ -556,6 +556,16 @@ Route::group(['middleware' => ['auth', 'first.run']], function () {
 
         /*
          * -------
+         * Event Modules page
+         * -------
+         */
+        Route::get('{event_id}/modules', [
+            'as'   => 'showEventModules',
+            'uses' => 'EventModuleController@showEventModules',
+        ]);
+
+        /*
+         * -------
          * Event Survey page
          * -------
          */

@@ -132,6 +132,16 @@ class Event extends MyBaseModel
     }
 
     /**
+     * The Modules associated with the event.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function modules()
+    {
+        return $this->hasMany('\App\Models\Module');
+    }
+
+    /**
      * The account associated with the event.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -288,5 +298,43 @@ class Event extends MyBaseModel
     public function getDates()
     {
         return ['created_at', 'updated_at', 'start_date', 'end_date'];
+    }
+
+    /**
+     * Lists installed and available Modules for the event
+     *
+     * @return  Array
+     */
+    public function list_modules()
+    {
+        $installed_modules = collect(self::list_available_modules());
+
+        // Activated modules
+        $active_modules = $this->modules()->lists('module');
+        // Remove modules which are not installed
+        $active_modules = $active_modules->intersect($installed_modules);
+        
+        // Installed but inactive modules
+        $inactive_modules = $installed_modules->diff($active_modules);
+
+        return [
+            'Active' => $active_modules,
+            'Available' => $inactive_modules
+        ];
+    }
+    
+    /**
+     * Lists available modules in the App\Modules directory
+     * @return Array
+     */
+    public static function list_available_modules()
+    {
+        $modules = [];
+
+        foreach(glob(app_path() . '/Modules/*', GLOB_ONLYDIR) as $dir) {
+            $modules[] = basename($dir);
+        }
+
+        return $modules;
     }
 }
