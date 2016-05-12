@@ -1,5 +1,5 @@
 <div role="dialog"  class="modal fade " style="display: none;">
-   {!! Form::open(array('url' => route('postCreateAttendee', array('event_id' => $event->id)), 'class' => 'ajax')) !!}
+   {!! Form::open(array('url' => route('postCreateAttende', array('event_id' => $event->id)), 'class' => 'ajax')) !!}
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header text-center">
@@ -53,6 +53,19 @@
                                             ))  !!}
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            {!! Form::label('locale', 'Language', array('class'=>'control-label required')) !!}
+                            {!! Form::select('locale', 
+					array(
+                                   	null => '',
+					'en' => 'English',
+					'es' => 'Espagnol',		
+					'fr' => 'French',		
+					     ),
+					Input::old('locale'), array('class'=>'form-control')) !!}
+
                         </div>
 
                         <div class="form-group">
