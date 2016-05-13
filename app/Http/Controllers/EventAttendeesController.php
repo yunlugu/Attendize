@@ -278,7 +278,7 @@ class EventAttendeesController extends MyBaseController
 					$attendee_first_name = $rows['first_name'];
 					$attendee_last_name = $rows['last_name'];
 					$attendee_email = $rows['email'];
-					
+
 					error_log ($ticket_id .' '. $ticket_price. ' '. $email_attendee);
 
 					
@@ -326,6 +326,10 @@ class EventAttendeesController extends MyBaseController
 					$attendee->first_name = $attendee_first_name;
 					$attendee->last_name = $attendee_last_name;
 					$attendee->email = $attendee_email;
+					$locale = $row['locale'];
+					if (!empty($locale) && array_key_exists($locale, get_supported_locales())) {
+						$attendee->locale = $row['locale'];
+					}
 					$attendee->event_id = $event_id;
 					$attendee->order_id = $order->id;
 					$attendee->ticket_id = $ticket_id;
