@@ -7,6 +7,8 @@ use App\Models\Message;
 use App\Models\Order;
 use Carbon\Carbon;
 use Mail;
+use App;
+use Log;
 
 class AttendeeMailer extends Mailer
 {
@@ -19,11 +21,19 @@ class AttendeeMailer extends Mailer
      */
     public function sendAttendeeTicket(Attendee $attendee, Order $order, $ticket_path)
     {
+	$previous_locale = App::getLocale();
+
+	App::setLocale($attendee->locale);
+        Log::info("Now using locale: ".App::getLocale());
+
         $this->sendTo($attendee->email, config('attendize.outgoing_email'), $order->event->organiser->name, 'Your ticket for the event '.$order->event->title, 'Emails.AttendeeTicketResend', [
             'order'      => $order,
             'email_logo' => $order->event->organiser->full_logo_path,
             'attendee'   => $attendee
         ], $ticket_path);
+
+	App::setLocale($previous_locale);
+        Log::info("Switched back to locale: ".App::getLocale());
     }
 
     /**

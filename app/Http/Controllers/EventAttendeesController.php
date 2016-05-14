@@ -19,6 +19,7 @@ use Excel;
 use Mail;
 use Response;
 use Validator;
+use Log;
 
 class EventAttendeesController extends MyBaseController
 {
@@ -31,7 +32,7 @@ class EventAttendeesController extends MyBaseController
      */
     public function showAttendees(Request $request, $event_id)
     {
-        $allowed_sorts = ['first_name', 'email', 'ticket_id', 'order_reference'];
+        $allowed_sorts = ['first_name', 'email', 'ticket_id', 'order_reference', 'locale'];
 
         $searchQuery = $request->get('q');
         $sort_order = $request->get('sort_order') == 'asc' ? 'asc' : 'desc';
@@ -112,6 +113,7 @@ class EventAttendeesController extends MyBaseController
             'ticket_id'    => 'required|exists:tickets,id,account_id,'.\Auth::user()->account_id,
             'ticket_price' => 'numeric|required',
             'email'        => 'email|required',
+            'locale'        => 'required',
         ];
 
         $messages = [
@@ -133,6 +135,7 @@ class EventAttendeesController extends MyBaseController
         $attendee_first_name =$request->get('first_name');
         $attendee_last_name = $request->get('last_name');
         $attendee_email = $request->get('email');
+        $attendee_locale = $request->get('locale');
         $email_attendee = $request->get('email_ticket');
 
         /*
@@ -180,6 +183,7 @@ class EventAttendeesController extends MyBaseController
         $attendee->first_name = $attendee_first_name;
         $attendee->last_name = $attendee_last_name;
         $attendee->email = $attendee_email;
+        $attendee->locale = $attendee_locale;
         $attendee->event_id = $event_id;
         $attendee->order_id = $order->id;
         $attendee->ticket_id = $ticket_id;
@@ -274,7 +278,7 @@ class EventAttendeesController extends MyBaseController
 					$attendee_first_name = $rows['first_name'];
 					$attendee_last_name = $rows['last_name'];
 					$attendee_email = $rows['email'];
-					
+
 					error_log ($ticket_id .' '. $ticket_price. ' '. $email_attendee);
 
 					
@@ -322,6 +326,10 @@ class EventAttendeesController extends MyBaseController
 					$attendee->first_name = $attendee_first_name;
 					$attendee->last_name = $attendee_last_name;
 					$attendee->email = $attendee_email;
+					$locale = $row['locale'];
+					if (!empty($locale) && array_key_exists($locale, get_supported_locales())) {
+						$attendee->locale = $row['locale'];
+					}
 					$attendee->event_id = $event_id;
 					$attendee->order_id = $order->id;
 					$attendee->ticket_id = $ticket_id;
@@ -580,6 +588,7 @@ class EventAttendeesController extends MyBaseController
             'first_name' => 'required',
             'ticket_id'  => 'required|exists:tickets,id,account_id,'.Auth::user()->account_id,
             'email'      => 'required|email',
+            'locale'      => 'required',
         ];
 
         $messages = [

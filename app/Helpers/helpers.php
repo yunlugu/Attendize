@@ -1,5 +1,38 @@
 <?php
 
+if (!function_exists('get_supported_locales')) {
+	
+	function get_supported_locales() {
+		
+		return array(
+			"en" => "English",
+			"es" => "Spanish",
+			"fr" => "French",
+		);
+
+	}
+
+}
+
+if (!function_exists('flag')) {
+	
+	function flag($locale) {
+	
+		$code = '';
+
+		switch ($locale) {
+			case "en":
+				$code = "gb";
+				break;
+			default:
+				$code = $locale;
+		}		
+
+		return '<span class="flag-icon flag-icon-'.$code.'"></span>';
+	}	
+
+}
+
 if(!function_exists('money')) {
     /**
      * @param int $amount

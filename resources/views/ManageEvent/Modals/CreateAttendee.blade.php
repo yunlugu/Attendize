@@ -56,6 +56,14 @@
                         </div>
 
                         <div class="form-group">
+                            {!! Form::label('locale', 'Language', array('class'=>'control-label required')) !!}
+                            {!! Form::select('locale', 
+					array_merge(array(null => ''), get_supported_locales()),
+					Input::old('locale'), array('class'=>'form-control')) !!}
+
+                        </div>
+
+                        <div class="form-group">
                             {!! Form::label('email', 'Email Address', array('class'=>'control-label')) !!}
 
                             {!!  Form::text('email', Input::old('email'),
