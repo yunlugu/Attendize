@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEventQuestionRequest;
 use App\Models\Event;
-use App\Models\Module;
 use Illuminate\Http\Request;
 
 /*
@@ -13,15 +12,14 @@ use Illuminate\Http\Request;
 
 class EventModuleController extends MyBaseController
 {
-
     /**
      * Show the event modules page
      *
-     * @param Request $request
      * @param $event_id
      * @return mixed
+     * @internal param Request $request
      */
-    public function showEventModules(Request $request, $event_id)
+    public function showEventModules($event_id)
     {
         $event = Event::scope()->findOrFail($event_id);
         $modules = $event->list_modules();
@@ -33,5 +31,4 @@ class EventModuleController extends MyBaseController
 
         return view('ManageEvent.Modules', $data);
     }
-
 }

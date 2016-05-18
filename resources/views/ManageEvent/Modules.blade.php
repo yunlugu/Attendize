@@ -34,13 +34,13 @@ Event Modules
     @foreach($modules as $i => $status)
         <div class="col-xs-12 col-md-6">
             <h4>{{ $i }} modules</h4>
-            @foreach($status as $active)
+            @foreach($status as $name)
 
             <div class="panel panel-success">
 
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        {{ $active }}
+                        <a href='/module/{{$event->id}}/{{ $name }}'>{{ ucfirst($name) }}</a>
                         <span class="pull-right">
                             <i style="cursor:pointer" class="text-danger ico-cancel-circle"></i>
                         </span>
@@ -48,7 +48,7 @@ Event Modules
                 </div>
 
                 <div class="panel-body">
-                    {{  \App\Models\Module::getDescription($active) }}
+                    {{  \App\Models\Module::getDescription($name) }}
                 </div>
             </div>
 

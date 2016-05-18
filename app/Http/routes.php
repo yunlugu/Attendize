@@ -106,7 +106,6 @@ Route::group(['prefix' => 'o'], function () {
  * Public event page routes
  */
 Route::group(['prefix' => 'e'], function () {
-
     /*
      * Embedded events
      */
@@ -556,7 +555,7 @@ Route::group(['middleware' => ['auth', 'first.run']], function () {
 
         /*
          * -------
-         * Event Modules page
+         * Event Enable/Disable Modules
          * -------
          */
         Route::get('{event_id}/modules', [

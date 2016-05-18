@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Str;
 use URL;
+use Module;
 
 class Event extends MyBaseModel
 {
@@ -294,6 +295,8 @@ class Event extends MyBaseModel
      * The attributes that should be mutated to dates.
      *
      * @var array $dates
+     *
+     * @return Array
      */
     public function getDates()
     {
@@ -309,11 +312,16 @@ class Event extends MyBaseModel
     {
         $installed_modules = collect(self::list_available_modules());
 
+        // Lowercase the modules
+        $installed_modules = $installed_modules->map(function($item, $key){
+           return strtolower($item);
+        });
+
         // Activated modules
         $active_modules = $this->modules()->lists('module');
         // Remove modules which are not installed
         $active_modules = $active_modules->intersect($installed_modules);
-        
+
         // Installed but inactive modules
         $inactive_modules = $installed_modules->diff($active_modules);
 
@@ -322,19 +330,13 @@ class Event extends MyBaseModel
             'Available' => $inactive_modules
         ];
     }
-    
+
     /**
      * Lists available modules in the App\Modules directory
      * @return Array
      */
     public static function list_available_modules()
     {
-        $modules = [];
-
-        foreach(glob(app_path() . '/Modules/*', GLOB_ONLYDIR) as $dir) {
-            $modules[] = basename($dir);
-        }
-
-        return $modules;
+        return Module::all();
     }
 }

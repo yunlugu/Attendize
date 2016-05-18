@@ -13,8 +13,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
-
+    'env'             => env('APP_ENV', 'production'),
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -26,8 +25,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
-
+    'debug'           => env('APP_DEBUG', false),
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -39,8 +37,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL'),
-
+    'url'             => env('APP_URL'),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -52,8 +49,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
-
+    'timezone'        => 'UTC',
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -65,8 +61,7 @@ return [
     |
     */
 
-    'locale' => 'en',
-
+    'locale'          => 'en',
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -79,7 +74,6 @@ return [
     */
 
     'fallback_locale' => 'en',
-
     /*
     |--------------------------------------------------------------------------
     | Encryption Key
@@ -91,9 +85,8 @@ return [
     |
     */
 
-    'key'    => env('APP_KEY', 'SomeRandomString'),
-    'cipher' => MCRYPT_RIJNDAEL_128,
-
+    'key'             => env('APP_KEY', 'SomeRandomString'),
+    'cipher'          => MCRYPT_RIJNDAEL_128,
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration
@@ -107,8 +100,7 @@ return [
     |
     */
 
-    'log' => 'daily',
-
+    'log'             => 'daily',
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -120,7 +112,7 @@ return [
     |
     */
 
-    'providers' => [
+    'providers'       => [
 
         /*
         * Laravel Framework Service Providers...
@@ -146,7 +138,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
         /*
          * Application Service Providers...
          */
@@ -156,7 +147,6 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\HelpersServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-
         /*
          * Third Party Service Providers...
          */
@@ -170,9 +160,8 @@ return [
         MaxHoffmann\Parsedown\ParsedownServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
-	    ArtemSchander\L5Modular\ModuleServiceProvider::class,
+        Pingpong\Modules\ModulesServiceProvider::class,
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Class Aliases
@@ -184,7 +173,7 @@ return [
     |
     */
 
-    'aliases' => [
+    'aliases'         => [
 
         'App'          => Illuminate\Support\Facades\App::class,
         'Artisan'      => Illuminate\Support\Facades\Artisan::class,
@@ -233,5 +222,6 @@ return [
         'Purifier'     => Mews\Purifier\Facades\Purifier::class,
         'Markdown'     => MaxHoffmann\Parsedown\ParsedownFacade::class,
         'Omnipay'      => Omnipay\Omnipay::class,
+        'Module'       => Pingpong\Modules\Facades\Module::class,
     ],
 ];

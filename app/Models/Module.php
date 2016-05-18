@@ -37,10 +37,10 @@ class Module extends MyBaseModel
     public static function getDescription($module)
     {
         $file = '';
-        $path = app_path().'/Modules/'.$module.'/description.txt';
+        $path = base_path().'/modules/'.$module.'/module.json';
 
         if(file_exists($path)) {
-            $file = file_get_contents($path);
+            $file = json_decode(file_get_contents($path))->description;
         }
 
         return $file;
