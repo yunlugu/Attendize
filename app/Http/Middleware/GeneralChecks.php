@@ -17,6 +17,7 @@ class GeneralChecks
      */
     public function handle($request, Closure $next)
     {
+
         // Show message to IE 8 and before users
         if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/(?i)msie [2-8]/', $_SERVER['HTTP_USER_AGENT'])) {
             Session::flash('message', 'Please update your browser. This application requires a modern browser.');

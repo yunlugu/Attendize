@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'env'             => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'debug'           => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'url'             => env('APP_URL'),
+    'url' => env('APP_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'timezone'        => 'UTC',
+    'timezone' => 'UTC',
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'locale'          => 'en',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -91,8 +91,8 @@ return [
     |
     */
 
-    'key'             => env('APP_KEY', 'SomeRandomString'),
-    'cipher'          => MCRYPT_RIJNDAEL_128,
+    'key' => env('APP_KEY', 'SomeRandomString'),
+    'cipher' => MCRYPT_RIJNDAEL_128,
 
     /*
     |--------------------------------------------------------------------------
@@ -107,7 +107,7 @@ return [
     |
     */
 
-    'log'             => 'daily',
+    'log' => 'daily',
 
     /*
     |--------------------------------------------------------------------------
@@ -150,7 +150,6 @@ return [
         /*
          * Application Service Providers...
          */
-
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
@@ -161,7 +160,6 @@ return [
         /*
          * Third Party Service Providers...
          */
-
         Vinelab\Http\HttpServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
