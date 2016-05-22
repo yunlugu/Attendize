@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by JapSeyz.
- * Date: 19/05/16
- * Time: 11.14
- */
 
 namespace App\Http\Controllers;
-
 
 use App\Models\Event;
 use App\Models\Organiser;

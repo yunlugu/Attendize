@@ -14,6 +14,7 @@ return [
     */
 
     'env'             => env('APP_ENV', 'production'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -26,6 +27,7 @@ return [
     */
 
     'debug'           => env('APP_DEBUG', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -38,6 +40,7 @@ return [
     */
 
     'url'             => env('APP_URL'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -50,6 +53,7 @@ return [
     */
 
     'timezone'        => 'UTC',
+
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -62,6 +66,7 @@ return [
     */
 
     'locale'          => 'en',
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -74,6 +79,7 @@ return [
     */
 
     'fallback_locale' => 'en',
+
     /*
     |--------------------------------------------------------------------------
     | Encryption Key
@@ -87,6 +93,7 @@ return [
 
     'key'             => env('APP_KEY', 'SomeRandomString'),
     'cipher'          => MCRYPT_RIJNDAEL_128,
+
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration
@@ -101,6 +108,7 @@ return [
     */
 
     'log'             => 'daily',
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -112,7 +120,7 @@ return [
     |
     */
 
-    'providers'       => [
+    'providers' => [
 
         /*
         * Laravel Framework Service Providers...
@@ -138,18 +146,22 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
+
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\HelpersServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+
         /*
          * Third Party Service Providers...
          */
+
         Vinelab\Http\HttpServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
@@ -161,7 +173,9 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         Pingpong\Modules\ModulesServiceProvider::class,
+
     ],
+
     /*
     |--------------------------------------------------------------------------
     | Class Aliases
@@ -173,7 +187,7 @@ return [
     |
     */
 
-    'aliases'         => [
+    'aliases' => [
 
         'App'          => Illuminate\Support\Facades\App::class,
         'Artisan'      => Illuminate\Support\Facades\Artisan::class,

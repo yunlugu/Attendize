@@ -106,6 +106,7 @@ Route::group(['prefix' => 'o'], function () {
  * Public event page routes
  */
 Route::group(['prefix' => 'e'], function () {
+
     /*
      * Embedded events
      */
