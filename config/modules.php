@@ -29,6 +29,7 @@ return [
             'start' => 'start.php',
             'routes' => 'Http/routes.php',
             'json' => 'module.json',
+            'composer' => 'composer.json',
             'views/index' => 'Resources/views/index.blade.php',
             'views/master' => 'Resources/views/layouts/master.blade.php',
             'scaffold/config' => 'Config/config.php',
@@ -120,7 +121,7 @@ return [
     */
 
     'scan' => [
-        'enabled' => false,
+        'enabled' => true,
         'paths' => [
             base_path('vendor/*/*'),
         ],

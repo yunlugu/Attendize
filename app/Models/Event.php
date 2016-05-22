@@ -304,6 +304,19 @@ class Event extends MyBaseModel
     }
 
     /**
+     * Checks whether the Module is enabled or not
+     *
+     * @param $module
+     *
+     * @return bool
+     */
+    public function moduleIsEnabled($module)
+    {
+        return $this->modules->pluck('module')->contains($module);
+    }
+
+
+    /**
      * Lists installed and available Modules for the event
      *
      * @return  Array

@@ -16,6 +16,8 @@ class CreateEnabledModulesTable extends Migration
             $t->increments('id');
             $t->integer('event_id');
             $t->string('module');
+
+            $t->timestamps();
         });
     }
 
@@ -26,6 +28,6 @@ class CreateEnabledModulesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('enabled_modules');
+        Schema::drop('modules');
     }
 }

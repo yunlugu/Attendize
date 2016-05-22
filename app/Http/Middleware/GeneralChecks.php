@@ -22,17 +22,6 @@ class GeneralChecks
             Session::flash('message', 'Please update your browser. This application requires a modern browser.');
         }
 
-        // Module Route, verify
-        if ($request->segment(1) === 'module') {
-            $event_id = $request->segment(2);
-            $module_name = $request->segment(3);
-            $event = Event::scope()->findOrFail($event_id);
-
-            if (!$event->modules()->lists('module')->contains($module_name)) {
-                abort(404, 'This Module is not installed');
-            }
-        }
-
         $response = $next($request);
 
         return $response;

@@ -6,6 +6,11 @@ use Storage;
 
 class Module extends MyBaseModel
 {
+    protected $fillable = [
+        'event_id',
+        'module'
+    ];
+
     /**
      * The validation rules of the model.
      *

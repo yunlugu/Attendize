@@ -40,10 +40,17 @@ Event Modules
 
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <a href='/module/{{$event->id}}/{{ $name }}'>{{ ucfirst($name) }}</a>
-                        <span class="pull-right">
-                            <i style="cursor:pointer" class="text-danger ico-cancel-circle"></i>
-                        </span>
+                        @if($i == 'Active')
+                            <a href='/module/{{$event->id}}/{{ $name }}'>{{ ucfirst($name) }}</a>
+                            <a href="/event/{{ $event->id }}/{{ $name }}/toggle" class="pull-right">
+                                <i style="cursor:pointer" class="text-danger ico-cancel-circle"></i>
+                            </a>
+                        @else
+                            {{ ucfirst($name) }}
+                            <a href="/event/{{ $event->id }}/{{ $name }}/toggle" class="pull-right">
+                                <i style="cursor:pointer" class="text-info ico-plus"></i>
+                            </a>
+                        @endif
                     </h3>
                 </div>
 
