@@ -22,7 +22,7 @@ class EventModuleController extends MyBaseController
     public function showEventModules($event_id)
     {
         $event = Event::scope()->findOrFail($event_id);
-        $modules = $event->list_modules();
+        $modules = $event->listModules();
 
         $data = [
             'event' => $event,

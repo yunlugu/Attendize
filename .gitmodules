@@ -1,0 +1,3 @@
+[submodule "modules/Volunteers"]
+	path = modules/Volunteers
+	url = https://JapSeyz@github.com/JapSeyz/attendize-volunteer

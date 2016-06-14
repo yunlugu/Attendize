@@ -35,6 +35,11 @@ class MyModuleController extends Controller
         }
 
         /*
+         * Share the Module across all views
+         */
+        View::share('module', $module);
+
+        /*
          * Share the event across all modules
          */
         View::share('event', $this->event);
