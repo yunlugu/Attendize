@@ -48,7 +48,14 @@ class MyModuleController extends Controller
         /*
          * Share the module url across all views
          */
-        View::share('url', '/'.$request->path());
+        View::share('url', '/' . $request->path());
+
+        /*
+          * Share the organizers across all views
+         */
+        if (auth()->check()) {
+            View::share('organisers', Organiser::scope()->get());
+        }
     }
 
 }
