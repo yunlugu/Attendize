@@ -77,6 +77,7 @@
 
     </head>
     <body class="attendize">
+
         <div id="event_page_wrap" vocab="http://schema.org/" typeof="Event">
             @yield('content')
         </div>
@@ -92,5 +93,8 @@
         @endif
 
         @include('Shared.Partials.GlobalFooterJS')
+
+        {{-- Module scripts --}}
+        @yield('scripts')
     </body>
 </html>

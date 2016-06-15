@@ -15,6 +15,7 @@ class MyModuleController extends Controller
 
     public function __construct(Request $request)
     {
+
         /**
          * Automatically inject $event into the views
          * Also inject $this->event into the Controllers
@@ -22,7 +23,7 @@ class MyModuleController extends Controller
          */
         if (auth()->check()) {
             $this->event = Event::scope()->findOrFail($request->segment(2));
-        }else{
+        } else {
             $this->event = Event::findOrFail($request->segment(2));
         }
 
@@ -30,7 +31,7 @@ class MyModuleController extends Controller
          * Only allow access to installed Modules
          */
         $module = $request->segment(3);
-        if(!$this->event->moduleIsEnabled($module)){
+        if (!$this->event->moduleIsEnabled($module)) {
             abort(404, 'The selected Module is not installed');
         }
 
@@ -45,9 +46,9 @@ class MyModuleController extends Controller
         View::share('event', $this->event);
 
         /*
-         * Share the organizers across all views
+         * Share the module url across all views
          */
-        View::share('organisers', Organiser::scope()->get());
+        View::share('url', '/'.$request->path());
     }
 
 }
