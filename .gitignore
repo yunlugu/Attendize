@@ -13,3 +13,4 @@ _ide_helper.php
 *.swp
 gulpfile.js
 public/modules
+bootstrap/
