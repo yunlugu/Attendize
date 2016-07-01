@@ -362,6 +362,36 @@ $(function () {
         }
     });
 
+    /**
+     * Scale the preview iFrames when changing the design of organiser/event pages.
+     */
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+        var target = $(e.target).attr("href");
+
+        if ($(target).hasClass('scale_iframe')) {
+
+            var $iframe = $('iframe', target);
+            var iframeWidth = $('.iframe_wrap').innerWidth();
+            var iframeHeight = $('.iframe_wrap').height();
+
+            $iframe.css({
+                width: 1200,
+                height: 1400
+            });
+
+            var iframeScale = (iframeWidth / 1200);
+            $iframe.css({
+                '-webkit-transform': 'scale(' + iframeScale + ')',
+                '-ms-transform': 'scale(' + iframeScale + ')',
+                'transform': 'scale(' + iframeScale + ')',
+                '-webkit-transform-origin': '0 0',
+                '-ms-transform-origin': '0 0',
+                'transform-origin': '0 0',
+            });
+        }
+    });
+
 });
 
 function changeQuestionType(select)
@@ -440,6 +470,43 @@ function toggleSubmitDisabled($submitButton) {
         .attr('disabled', true)
         .addClass('disabled')
         .val('Working...');
+}
+
+/**
+ * 
+ * @returns {{}}
+ */
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+
+/**
+ * Replaces a parameter in a URL with a new parameter
+ *
+ * @param url
+ * @param paramName
+ * @param paramValue
+ * @returns {*}
+ */
+function replaceUrlParam(url, paramName, paramValue) {
+    var pattern = new RegExp('\\b(' + paramName + '=).*?(&|$)')
+    if (url.search(pattern) >= 0) {
+        return url.replace(pattern, '$1' + paramValue + '$2');
+    }
+    return url + (url.indexOf('?') > 0 ? '&' : '?') + paramName + '=' + paramValue
 }
 
 /**

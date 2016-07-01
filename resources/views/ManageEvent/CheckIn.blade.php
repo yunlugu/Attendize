@@ -10,7 +10,7 @@
 
     {!! HTML::style('assets/stylesheet/application.css') !!}
     {!! HTML::style('assets/stylesheet/check_in.css') !!}
-    {!! HTML::script('vendor/jquery/jquery.js') !!}
+    {!! HTML::script('vendor/jquery/dist/jquery.min.js') !!}
 
     @include('Shared/Layouts/ViewJavascript')
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
@@ -92,7 +92,7 @@
                         >
                         Name: <b>@{{ attendee.first_name }} @{{ attendee.last_name }} </b>
                         <br>
-                        Reference: <b>@{{ attendee.reference }}</b>
+                        Reference: <b>@{{ attendee.order_reference + '-' + attendee.reference_index }}</b>
                         <br>
                         Ticket: <b>@{{ attendee.ticket }}</b>
                         <a href="" class="ci btn btn-successfulQrRead">

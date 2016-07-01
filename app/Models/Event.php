@@ -321,9 +321,9 @@ class Event extends MyBaseModel
      *
      * @return  Array
      */
-    public function list_modules()
+    public function listModules()
     {
-        $installed_modules = collect(self::list_available_modules());
+        $installed_modules = collect(self::availableModules());
 
         // Lowercase the modules
         $installed_modules = $installed_modules->map(function($item, $key){
@@ -348,7 +348,7 @@ class Event extends MyBaseModel
      * Lists available modules in the App\Modules directory
      * @return Array
      */
-    public static function list_available_modules()
+    public static function availableModules()
     {
         return Module::all();
     }
