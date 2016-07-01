@@ -44,6 +44,10 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+        'volunteer' => [
+            'driver' => 'session',
+            'provider' => 'volunteers'
+        ],
     ],
 
     /*
@@ -67,6 +71,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'volunteers' => [
+            'driver' => 'eloquent',
+            'model' => \Modules\Volunteers\Models\Volunteer::class,
         ],
     ],
 
@@ -92,6 +100,12 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'email' => 'Emails.Auth.Reminder',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'volunteers' => [
+            'provider' => 'volunteers',
             'email' => 'Emails.Auth.Reminder',
             'table' => 'password_resets',
             'expire' => 60,
