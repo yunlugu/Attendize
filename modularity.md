@@ -1,7 +1,7 @@
 ## Modularity
 
 Attendize is sporting an incredibly powerful modularity framework,
- and can easily be extended though modules.
+and can easily be extended though modules.
 
 ### What are the modules capable of?
 
@@ -12,20 +12,20 @@ a module may overrule a built-in route and thus customize even
 native Attendize methods.
 
 Every module also includes it's own <code>composer.json</code> and may require packages
-just like the main Laravel installation
+just like the main Laravel installation.
 
 ### Installation
- Modules can only be installed by the sysadmin, but installed modules
- can be enabled and disabled on a per-event basis.
+Modules can only be installed by the sysadmin, but installed modules
+can be enabled and disabled on a per-event basis.
 
- Installing a module is super easy, all you have to do is run:
+Installing a module is super easy, all you have to do is run:
 
- <code>php artisan module:install($author/$package, $branch)</code>
- NOTE: $branch defaults to 'dev-master'.
+<code>php artisan module:install($author/$package, $branch)</code>
+NOTE: $branch defaults to 'dev-master'.
 
- eg. <code>php artisan module:install japseyz/attendize-volunteers master
+eg. <code>php artisan module:install japseyz/attendize-volunteers master
 
- It then get's that module off of Packagist.
+It then get's that module off of Packagist.
 
 It's now time to publish the modules assets and run the migrations, this is done with
 the following commands:
@@ -35,20 +35,20 @@ that modules assets.
 
 <code>php artisan module:migrate</code> Again this optionally takes a module name as a parameter.
 
- Once the module has been installed, you'll be able to enable it
- from the event dashboard ( */event/$eventId/modules* )
+Once the module has been installed, you'll be able to enable it
+from the event dashboard ( */event/$eventId/modules* )
 
 ### Updating Module dependencies
 
 To update a module you may do <code>php artisan module:update $moduleName</code>
 
 ### Creating Module
- To create a module just run this command:
+To create a module just run this command:
 
- * run <code>php artisan module:make $moduleName</code>
+* run <code>php artisan module:make $moduleName</code>
 
- After this you have a mini-version of a full Laravel app.
- It takes advantage of the Laravel app that it is a part of.
+After this you have a mini-version of a full Laravel app.
+It takes advantage of the Laravel app that it is a part of.
 
 
 ### Artisan for modules
@@ -61,35 +61,35 @@ This would give you something that looks like this:
 
 <code>php artisan module:make-controller UsersController Volunteers</code>
 
- There are a few guidelines to keep modules in sync with the rest
- of the app.
+There are a few guidelines to keep modules in sync with the rest
+of the app.
 
 ## Guidelines
 
 ### Routes
 
- **Backend** Routes for a module consists of 3 segments like this:
- * module
- * $eventId
- * $moduleName
+**Backend** Routes for a module consists of 3 segments like this:
+* module
+* $eventId
+* $moduleName
 
- You will then get a route that looks like:
- <code>/module/1/volunteers</code>
+You will then get a route that looks like:
+<code>/module/1/volunteers</code>
 
- **Frontend** routes will have the following format
- * m
- * $eventId
- * $moduleName
+**Frontend** routes will have the following format
+* m
+* $eventId
+* $moduleName
 
- Giving you a route that looks like:
- <code>/m/1/volunteers</code>
+Giving you a route that looks like:
+<code>/m/1/volunteers</code>
 
 
- This format follows the rest of the *Attendize* code,
- and should make maintaining easier in the long run.
+This format follows the rest of the *Attendize* code,
+and should make maintaining easier in the long run.
 
- It is also possible for a Module to overwrite generic routes,
- allowing for a module to create a front-page, or disallow new users.
+It is also possible for a Module to overwrite generic routes,
+allowing for a module to create a front-page, or disallow new users.
 
 ### Migrations
 Database tables should be prefixed with the module-name
@@ -111,7 +111,7 @@ variables.
 
 Default Views should extend <code>Shared.Layouts.Master</code>
 
-**HTML id's** in views should also be prefixed with the module-name
+**HTML ids** in views should also be prefixed with the module-name
 to prevent conflicts
 
 ### TODO:
