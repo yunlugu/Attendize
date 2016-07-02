@@ -137,10 +137,10 @@ return [
     */
 
     'composer' => [
-        'vendor' => 'pingpong-modules',
+        'vendor' => 'attendize-modules',
         'author' => [
-            'name' => 'Pingpong Labs',
-            'email' => 'pingpong.labs@gmail.com',
+            'name' => 'Your Name',
+            'email' => 'Your Email',
         ],
     ],
     /*
@@ -153,7 +153,7 @@ return [
     */
     'cache' => [
         'enabled' => false,
-        'key' => 'pingpong-modules',
+        'key' => 'attendize-modules',
         'lifetime' => 60,
     ],
 
