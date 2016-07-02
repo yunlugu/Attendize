@@ -11,7 +11,7 @@ This allows for incredibly powerful implementations, because
 a module may overrule a built-in route and thus customize even
 native Attendize methods.
 
-Every module also includes it's own <code>composer.json</code> and may require packages
+Every module also includes it's own `composer.json` and may require packages
 just like the main Laravel installation.
 
 ### Installation
@@ -20,32 +20,32 @@ can be enabled and disabled on a per-event basis.
 
 Installing a module is super easy, all you have to do is run:
 
-<code>php artisan module:install($author/$package, $branch)</code>
+`php artisan module:install($author/$package, $branch)`
 NOTE: $branch defaults to 'dev-master'.
 
-eg. <code>php artisan module:install japseyz/attendize-volunteers master
+eg. `php artisan module:install japseyz/attendize-volunteers master
 
 It then get's that module off of Packagist.
 
 It's now time to publish the modules assets and run the migrations, this is done with
 the following commands:
 
-<code>php artisan module:publish</code> Optionally you may append a module name to publish only
+`php artisan module:publish` Optionally you may append a module name to publish only
 that modules assets.
 
-<code>php artisan module:migrate</code> Again this optionally takes a module name as a parameter.
+`php artisan module:migrate` Again this optionally takes a module name as a parameter.
 
 Once the module has been installed, you'll be able to enable it
 from the event dashboard ( */event/$eventId/modules* )
 
 ### Updating Module dependencies
 
-To update a module you may do <code>php artisan module:update $moduleName</code>
+To update a module you may do `php artisan module:update $moduleName`
 
 ### Creating Module
 To create a module just run this command:
 
-* run <code>php artisan module:make $moduleName</code>
+* run `php artisan module:make $moduleName`
 
 After this you have a mini-version of a full Laravel app.
 It takes advantage of the Laravel app that it is a part of.
@@ -55,11 +55,11 @@ It takes advantage of the Laravel app that it is a part of.
 To generate controllers, models middleware etc. for modules the syntax is
 almost the same, follow this convention:
 
-<code>php artisan module:make-$type $name $moduleName</code>
+`php artisan module:make-$type $name $moduleName`
 
 This would give you something that looks like this:
 
-<code>php artisan module:make-controller UsersController Volunteers</code>
+`php artisan module:make-controller UsersController Volunteers`
 
 There are a few guidelines to keep modules in sync with the rest
 of the app.
@@ -74,7 +74,7 @@ of the app.
 * $moduleName
 
 You will then get a route that looks like:
-<code>/module/1/volunteers</code>
+`/module/1/volunteers`
 
 **Frontend** routes will have the following format
 * m
@@ -82,7 +82,7 @@ You will then get a route that looks like:
 * $moduleName
 
 Giving you a route that looks like:
-<code>/m/1/volunteers</code>
+`/m/1/volunteers`
 
 
 This format follows the rest of the *Attendize* code,
@@ -97,11 +97,11 @@ to prevent potential conflicts.
 
 This would mean that the users table from the Volunteers module
 would be named:
-<code>volunteers_users</code>
+`volunteers_users`
 
 ### Controllers
 
-Controllers should extend <code>App\Http\Controllers\MyModuleController</code>
+Controllers should extend `App\Http\Controllers\MyModuleController`
 as it will automatically block requests to *disabled* modules.
 MyModuleController will also populate all Module-views with relevant
 variables.
@@ -109,10 +109,10 @@ variables.
 
 ### Views
 
-Default Views should extend <code>Shared.Layouts.Master</code>
+Default Views should extend `Shared.Layouts.Master`
 
 **HTML ids** in views should also be prefixed with the module-name
 to prevent conflicts
 
-### TODO:
+## TODO:
 * Improve Documentation
