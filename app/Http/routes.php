@@ -705,4 +705,3 @@ Route::get('/terms_and_conditions', [
         return 'TODO: add terms and cond';
     }
 ]);
-

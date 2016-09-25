@@ -6,7 +6,7 @@
 @stop
 
 @section('page_title')
-    {{$organiser->name}} Events
+    {{$organiser->name}} 培训
 @stop
 
 @section('top_nav')
@@ -50,7 +50,7 @@
             <div class="col-md-3 col-xs-6">
                 <div class="order_options">
                     <span class="event_count">
-                        {{$organiser->events->count()}} events
+                        {{$organiser->events->count()}} 次培训
                     </span>
                 </div>
             </div>

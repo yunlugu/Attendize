@@ -5,18 +5,16 @@
 @stop
 
 @section('blankslate-title')
-    No Events Yet!
+    {{trans('ManageOrganiser/Partials/EventsBlankSlate.no_events_yet')}}
 @stop
 
 @section('blankslate-text')
-    Looks like you have yet to create an event. You can create one by clicking the button below.
+    {{trans('ManageOrganiser/Partials/EventsBlankSlate.have_yet_to_create')}}
 @stop
 
 @section('blankslate-body')
 <button data-invoke="modal" data-modal-id="CreateEvent" data-href="{{route('showCreateEvent', ['organiser_id' => $organiser->id])}}" href='javascript:void(0);'  class="btn btn-success mt5 btn-lg" type="button">
     <i class="ico-ticket"></i>
-    Create Event
+    {{trans('ManageOrganiser/Partials/EventsBlankSlate.create_event')}}
 </button>
 @stop
-
-

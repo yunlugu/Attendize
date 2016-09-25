@@ -9,18 +9,49 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h3 class="modal-title">
                     <i class="ico-calendar"></i>
-                    Create Event</h3>
+                    新增培训</h3>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
-                            {!! Form::label('title', 'Event Title', array('class'=>'control-label required')) !!}
-                            {!!  Form::text('title', Input::old('title'),array('class'=>'form-control','placeholder'=>'E.g: '.Auth::user()->first_name.'\'s International Conference' ))  !!}
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {!! Form::label('title', '培训主题', array('class'=>'control-label required')) !!}
+                                    {!!  Form::text('title', Input::old('title'),array('class'=>'form-control','placeholder'=>'E.g: '.Auth::user()->first_name.'\'s International Conference' ))  !!}
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    {!! Form::label('apartment', '部门', array('class'=>'control-label required')) !!}
+                                    {!!Form::select('apartment', [
+                                        '技术部' => '技术部',
+                                        '行政部' => '行政部',
+                                        '运营部' => '运营部',
+                                        '宣传部' => '宣传部',
+                                        '外媒部' => '外媒部'
+                                        ], null, ['class' => 'form-control'])!!}
+                                </div>
+                            </div>
+                            <!-- <div class="col-sm-3">
+                                <div class="form-group">
+                                    {!! Form::label('title', '小组', array('class'=>'control-label required')) !!}
+                                    这里准备改ajax
+                                    {!!Form::select('apartment', [
+                                        '1' => '技术部',
+                                        '2' => '行政部',
+                                        '3' => '运营部',
+                                        '4' => '宣传部',
+                                        '5' => '外媒部'
+
+                                        ], null, ['class' => 'form-control'])!!}
+                                </div>
+                            </div> -->
                         </div>
 
                         <div class="form-group custom-theme">
-                            {!! Form::label('description', 'Event Description', array('class'=>'control-label required')) !!}
+                            {!! Form::label('description', '描述', array('class'=>'control-label required')) !!}
                             {!!  Form::textarea('description', Input::old('description'),
                                         array(
                                         'class'=>'form-control  editable',
@@ -30,7 +61,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    {!! Form::label('start_date', 'Event Start Date', array('class'=>'required control-label')) !!}
+                                    {!! Form::label('start_date', '开始时间', array('class'=>'required control-label')) !!}
                                     {!!  Form::text('start_date', Input::old('start_date'),
                                                         [
                                                     'class'=>'form-control start hasDatepicker ',
@@ -45,7 +76,7 @@
 
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    {!!  Form::label('end_date', 'Event End Date',
+                                    {!!  Form::label('end_date', '结束时间',
                                                 [
                                             'class'=>'required control-label '
                                         ])  !!}
@@ -62,12 +93,12 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            {!! Form::label('event_image', 'Event Image (Flyer or Graphic etc.)', array('class'=>'control-label ')) !!}
+                            {!! Form::label('event_image', trans('ManageOrganiser/Modals/CreateEvent.event_image'), array('class'=>'control-label ')) !!}
                             {!! Form::styledFile('event_image') !!}
 
                         </div>
                         <div class="form-group address-automatic">
-                            {!! Form::label('name', 'Venue Name', array('class'=>'control-label required ')) !!}
+                            {!! Form::label('name', trans('ManageOrganiser/Modals/CreateEvent.place'), array('class'=>'control-label required ')) !!}
                             {!!  Form::text('venue_name_full', Input::old('venue_name_full'),
                                         array(
                                         'class'=>'form-control geocomplete location_field',
@@ -96,59 +127,31 @@
 
                         <div class="address-manual" style="display:none;">
                             <h5>
-                                Address Details
+                                {{trans('ManageOrganiser/Modals/CreateEvent.address_details')}}
                             </h5>
 
                             <div class="form-group">
-                                {!! Form::label('location_venue_name', 'Venue Name', array('class'=>'control-label required ')) !!}
+                                {!! Form::label('location_venue_name', trans('ManageOrganiser/Modals/CreateEvent.venue_name'), array('class'=>'control-label required ')) !!}
                                 {!!  Form::text('location_venue_name', Input::old('location_venue_name'), [
                                         'class'=>'form-control location_field',
                                         'placeholder'=>'E.g: The Crab Shack'
                                         ])  !!}
                             </div>
                             <div class="form-group">
-                                {!! Form::label('location_address_line_1', 'Address Line 1', array('class'=>'control-label')) !!}
+                                {!! Form::label('location_address_line_1', '地点详情', array('class'=>'control-label')) !!}
                                 {!!  Form::text('location_address_line_1', Input::old('location_address_line_1'), [
                                         'class'=>'form-control location_field',
                                         'placeholder'=>'E.g: 45 Grafton St.'
                                         ])  !!}
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('location_address_line_2', 'Address Line 2', array('class'=>'control-label')) !!}
-                                {!!  Form::text('location_address_line_2', Input::old('location_address_line_2'), [
-                                        'class'=>'form-control location_field',
-                                        'placeholder'=>'E.g: Dublin.'
-                                        ])  !!}
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        {!! Form::label('location_state', 'City', array('class'=>'control-label')) !!}
-                                        {!!  Form::text('location_state', Input::old('location_state'), [
-                                                'class'=>'form-control location_field',
-                                                'placeholder'=>'E.g: Dublin.'
-                                                ])  !!}
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        {!! Form::label('location_post_code', 'Post Code', array('class'=>'control-label')) !!}
-                                        {!!  Form::text('location_post_code', Input::old('location_post_code'), [
-                                                'class'=>'form-control location_field',
-                                                'placeholder'=>'E.g: Dublin.'
-                                                ])  !!}
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
                         <span>
                             <a data-clear-field=".location_field"
                                data-toggle-class=".address-automatic, .address-manual"
-                               data-show-less-text="or <b>Select from existing venues</b>" href="javascript:void(0);"
+                               data-show-less-text="or <b>{{trans('ManageOrganiser/Modals/CreateEvent.select_from_existing_venues')}}</b>" href="javascript:void(0);"
                                class="in-form-link show-more-options clear_location">
-                                or <b>Enter address manually</b>
+                                or <b>{{trans('ManageOrganiser/Modals/CreateEvent.enter_address_manually')}}</b>
                             </a>
                         </span>
 
@@ -157,11 +160,11 @@
                         @else
                             <div class="create_organiser" style="{{$organisers->isEmpty() ? '' : 'display:none;'}}">
                                 <h5>
-                                    Organiser Details
+                                    {{trans('ManageOrganiser/Modals/CreateEvent.organiser_detail')}}
                                 </h5>
 
                                 <div class="form-group">
-                                    {!! Form::label('organiser_name', 'Organiser Name', array('class'=>'required control-label ')) !!}
+                                    {!! Form::label('organiser_name', trans('ManageOrganiser/Modals/CreateEvent.organiser_name'), array('class'=>'required control-label ')) !!}
                                     {!!  Form::text('organiser_name', Input::old('organiser_name'),
                                                 array(
                                                 'class'=>'form-control',
@@ -169,7 +172,7 @@
                                                 ))  !!}
                                 </div>
                                 <div class="form-group">
-                                    {!! Form::label('organiser_email', 'Organiser Email', array('class'=>'control-label required')) !!}
+                                    {!! Form::label('organiser_email', trans('ManageOrganiser/Modals/CreateEvent.organiser_email'), array('class'=>'control-label required')) !!}
                                     {!!  Form::text('organiser_email', Input::old('organiser_email'),
                                                 array(
                                                 'class'=>'form-control ',
@@ -177,7 +180,7 @@
                                                 ))  !!}
                                 </div>
                                 <div class="form-group">
-                                    {!! Form::label('organiser_about', 'Organizer Description', array('class'=>'control-label ')) !!}
+                                    {!! Form::label('organiser_about', trans('ManageOrganiser/Modals/CreateEvent.organiser_description'), array('class'=>'control-label ')) !!}
                                     {!!  Form::textarea('organiser_about', Input::old('organiser_about'),
                                                 array(
                                                 'class'=>'form-control editable2',
@@ -186,7 +189,7 @@
                                                 ))  !!}
                                 </div>
                                 <div class="form-group more-options">
-                                    {!! Form::label('organiser_logo', 'Organiser Logo', array('class'=>'control-label ')) !!}
+                                    {!! Form::label('organiser_logo', trans('ManageOrganiser/Modals/CreateEvent.organiser_logo'), array('class'=>'control-label ')) !!}
                                     {!! Form::styledFile('organiser_logo') !!}
                                 </div>
                                 <div class="row more-options">
@@ -216,14 +219,14 @@
 
                                 <a data-show-less-text="Hide Additional Oraganiser Options" href="javascript:void(0);"
                                    class="in-form-link show-more-options">
-                                    Additional Organiser Options
+                                    {{trans('ManageOrganiser/Modals/CreateEvent.additional_organiser_options')}}
                                 </a>
                             </div>
 
                             @if(!$organisers->isEmpty())
                                 <div class="form-group select_organiser" style="{{$organisers ? '' : 'display:none;'}}">
 
-                                    {!! Form::label('organiser_id', 'Select Organiser', array('class'=>'control-label ')) !!}
+                                    {!! Form::label('organiser_id', trans('ManageOrganiser/Modals/CreateEvent.select_organiser'), array('class'=>'control-label ')) !!}
                                     {!! Form::select('organiser_id', $organisers, $organiser_id, ['class' => 'form-control']) !!}
 
                                 </div>
@@ -231,7 +234,7 @@
                                     <a data-toggle-class=".select_organiser, .create_organiser"
                                        data-show-less-text="or <b>Select an organiser</b>" href="javascript:void(0);"
                                        class="in-form-link show-more-options">
-                                        or <b>Create an organiser</b>
+                                        or <b>{{trans('ManageOrganiser/Modals/CreateEvent.create_an_organiser')}}</b>
                                     </a>
                                 </span>
                             @endif
@@ -242,7 +245,7 @@
             <div class="modal-footer">
                 <span class="uploadProgress"></span>
                 {!! Form::button('Cancel', ['class'=>"btn modal-close btn-danger",'data-dismiss'=>'modal']) !!}
-                {!! Form::submit('Create Event', ['class'=>"btn btn-success"]) !!}
+                {!! Form::submit(trans('ManageOrganiser/Modals/CreateEvent.create_event'), ['class'=>"btn btn-success"]) !!}
             </div>
         </div>
         {!! Form::close() !!}

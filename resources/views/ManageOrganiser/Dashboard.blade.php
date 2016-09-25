@@ -2,14 +2,14 @@
 
 @section('title')
     @parent
-    Dashboard
+    {{trans('ManageOrganiser/Dashboard.dashboard')}}
 @stop
 
 @section('top_nav')
     @include('ManageOrganiser.Partials.TopNav')
 @stop
 @section('page_title')
-    {{ $organiser->name }} Dashboard
+    {{ $organiser->name }} {{trans('ManageOrganiser/Dashboard.dashboard')}}
 @stop
 
 @section('menu')
@@ -53,7 +53,7 @@
                     {{$organiser->events->count()}}
                 </h3>
             <span>
-                Events
+                {{trans('ManageOrganiser/Dashboard.events')}}
             </span>
             </div>
         </div>
@@ -63,7 +63,7 @@
                     {{$organiser->attendees->count()}}
                 </h3>
             <span>
-                Tickets Sold
+                {{trans('ManageOrganiser/Dashboard.tickets_sold')}}
             </span>
             </div>
         </div>
@@ -73,7 +73,7 @@
                     {{ money($organiser->events->sum('sales_volume') + $organiser->events->sum('organiser_fees_volume'), $organiser->account->currency) }}
                 </h3>
             <span>
-                Sales Volume
+                {{trans('ManageOrganiser/Dashboard.sales_volume')}}
             </span>
             </div>
         </div>
@@ -83,25 +83,25 @@
 
         <div class="col-md-8">
 
-            <h4 style="margin-bottom: 25px;margin-top: 20px;">Event Calendar</h4>
+            <h4 style="margin-bottom: 25px;margin-top: 20px;">{{trans('ManageOrganiser/Dashboard.event_calender')}}</h4>
                     <div id="calendar"></div>
 
 
-            <h4 style="margin-bottom: 25px;margin-top: 20px;">Upcoming Events</h4>
+            <h4 style="margin-bottom: 25px;margin-top: 20px;">{{trans('ManageOrganiser/Dashboard.upcoming_event')}}</h4>
             @if($upcoming_events->count())
                 @foreach($upcoming_events as $event)
                     @include('ManageOrganiser.Partials.EventPanel')
                 @endforeach
             @else
                 <div class="alert alert-success alert-lg">
-                    You have no events coming up. <a href="#"
+                    {{[trans('ManageOrganiser/Dashboard.no_event_coming_up')]}} <a href="#"
                                                      data-href="{{route('showCreateEvent', ['organiser_id' => $organiser->id])}}"
-                                                     class=" loadModal">You can click here to create an event.</a>
+                                                     class=" loadModal">{{trans('ManageOrganiser/Dashboard.click_to_create_an_event')}}</a>
                 </div>
             @endif
         </div>
         <div class="col-md-4">
-            <h4 style="margin-bottom: 25px;margin-top: 20px;">Recent Orders</h4>
+            <h4 style="margin-bottom: 25px;margin-top: 20px;">{{trans('ManageOrganiser/Dashboard.recent_orders')}}</h4>
               @if($organiser->orders->count())
             <ul class="list-group">
                     @foreach($organiser->orders()->orderBy('created_at', 'desc')->take(5)->get() as $order)
@@ -125,7 +125,7 @@
                     @endforeach
                   @else
                             <div class="alert alert-success alert-lg">
-                                Looks like there are no recent orders.
+                                {{trans('ManageOrganiser/Dashboard.no_recent_orders')}}
                             </div>
                 @endif
             </ul>
