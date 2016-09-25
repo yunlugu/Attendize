@@ -167,6 +167,8 @@ class CreateUsersTable extends Migration
             $t->increments('id');
 
             $t->string('title');
+            $t->string('apartment');
+            $t->string('tags', 100)->default('code');
             $t->string('location')->nullable();
             $t->string('bg_type', 15)->default('color');
             $t->string('bg_color')->default(config('attendize.event_default_bg_color'));

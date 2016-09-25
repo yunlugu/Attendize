@@ -2,6 +2,19 @@
 
 [![Join the chat at https://gitter.im/csuyy/Lobby](https://badges.gitter.im/Attendize/Attendize.svg)](https://gitter.im/csuyy/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 
+## 参与开发
+
+本地搭建：
+```
+git clone https://github.com/attendize/attendize attendize
+cd attendize
+cp .env.example .env # 请配置你的env
+# 请先手动创建相应的空数据库再进行下一步
+# then
+composer install
+php artisan attendize:install
+
+
 ## Woking on
 
 - 多语言支持
