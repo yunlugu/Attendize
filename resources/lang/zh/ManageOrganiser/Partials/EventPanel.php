@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'tickets_sold' => '报名人数',
-    'revenue' => '签到人数',
+    'tickets_sold' => '门票售出',
+    'revenue' => '收入',
     'edit' => '编辑',
     'manage' => '管理',
 

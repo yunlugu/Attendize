@@ -2,11 +2,11 @@
 
 @section('title')
     @parent
-    Organiser Events
+    {{trans('ManageOrganiser/Customize.organiser_events')}}
 @stop
 
 @section('page_title')
-    {{$organiser->name}} Events
+    {{$organiser->name}} {{trans('ManageOrganiser/Customize.events')}}
 @stop
 
 @section('top_nav')
@@ -47,10 +47,10 @@
         <div class="col-md-12">
             <ul class="nav nav-tabs">
                 <li class="active">
-                    <a href="#organiserSettings" data-toggle="tab">Organiser Settings</a>
+                    <a href="#organiserSettings" data-toggle="tab">{{trans('ManageOrganiser/Customize.organiser_settings')}}</a>
                 </li>
                 <li>
-                    <a href="#OrganiserPageDesign" data-toggle="tab">Organiser Page Design</a>
+                    <a href="#OrganiserPageDesign" data-toggle="tab">{{trans('ManageOrganiser/Customize.organiser_page_design')}}</a>
                 </li>
             </ul>
             <div class="tab-content panel">
@@ -58,26 +58,26 @@
                     {!! Form::model($organiser, array('url' => route('postEditOrganiser', ['organiser_id' => $organiser->id]), 'class' => 'ajax')) !!}
 
                     <div class="form-group">
-                        {!! Form::label('enable_organiser_page', 'Enable Public Organiser Page', array('class'=>'control-label required')) !!}
+                        {!! Form::label('enable_organiser_page', trans('ManageOrganiser/Customize.enable_public_organiser_page'), array('class'=>'control-label required')) !!}
                         {!!  Form::select('enable_organiser_page', [
-                        '1' => 'Make organiser page visible to the public.',
-                        '0' => 'Hide organiser page from the public.'],Input::old('enable_organiser_page'),
+                        '1' => trans('ManageOrganiser/Customize.make_organiser_page_visible'),
+                        '0' => trans('ManageOrganiser/Customize.hide_organiser_page')],Input::old('enable_organiser_page'),
                                                     array(
                                                     'class'=>'form-control'
                                                     ))  !!}
                         <div class="help-block">
-                            Organiser pages contain a public list of past and upcoming events.
+                            {{trans('ManageOrganiser/Customize.organiser_pages_cotain_events_list')}}
                         </div>
                     </div>
                     <div class="form-group">
-                        {!! Form::label('name', 'Organiser Name', array('class'=>'required control-label ')) !!}
+                        {!! Form::label('name', trans('ManageOrganiser/Customize.organiser_name'), array('class'=>'required control-label ')) !!}
                         {!!  Form::text('name', Input::old('name'),
                                                 array(
                                                 'class'=>'form-control'
                                                 ))  !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::label('email', 'Organiser Email', array('class'=>'control-label required')) !!}
+                        {!! Form::label('email', trans('ManageOrganiser/Customize.organiser_email'), array('class'=>'control-label required')) !!}
                         {!!  Form::text('email', Input::old('email'),
                                                 array(
                                                 'class'=>'form-control ',
@@ -85,7 +85,7 @@
                                                 ))  !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::label('about', 'Organiser Description', array('class'=>'control-label ')) !!}
+                        {!! Form::label('about', trans('ManageOrganiser/Customize.organiser_description'), array('class'=>'control-label ')) !!}
                         {!!  Form::textarea('about', Input::old('about'),
                                                 array(
                                                 'class'=>'form-control ',
@@ -94,7 +94,7 @@
                                                 ))  !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::label('google_analytics_code', 'Organiser Analytics Code', array('class'=>'control-label')) !!}
+                        {!! Form::label('google_analytics_code', trans('ManageOrganiser/Customize.organiser_analytics_code'), array('class'=>'control-label')) !!}
                         {!!  Form::text('google_analytics_code', Input::old('google_analytics_code'),
                                                 array(
                                                 'class'=>'form-control'
@@ -132,22 +132,22 @@
                     </div>
                     @if(is_file($organiser->logo_path))
                         <div class="form-group">
-                            {!! Form::label('current_logo', 'Current Logo', array('class'=>'control-label ')) !!}
+                            {!! Form::label('current_logo', trans('ManageOrganiser/Customize.current_logo'), array('class'=>'control-label ')) !!}
 
                             <div class="thumbnail">
                                 {!!HTML::image($organiser->logo_path)!!}
-                                {!! Form::label('remove_current_image', 'Delete Logo?', array('class'=>'control-label ')) !!}
+                                {!! Form::label('remove_current_image', trans('ManageOrganiser/Customize.delete_logo'), array('class'=>'control-label ')) !!}
                                 {!! Form::checkbox('remove_current_image') !!}
                             </div>
                         </div>
                     @endif
                     <div class="form-group">
-                        {!!  Form::labelWithHelp('organiser_logo', 'Organiser Logo', array('class'=>'control-label '),
-                            'We recommend a square image, as this will look best on printed tickets and event pages.')  !!}
+                        {!!  Form::labelWithHelp('organiser_logo', trans('ManageOrganiser/Customize.organiser_logo'), array('class'=>'control-label '),
+                            trans('ManageOrganiser/Customize.recommend_square_image')) !!}
                         {!!Form::styledFile('organiser_logo')!!}
                     </div>
                     <div class="modal-footer">
-                        {!! Form::submit('Save Organiser', ['class'=>"btn btn-success"]) !!}
+                        {!! Form::submit(trans('ManageOrganiser/Customize.save_organiser'), ['class'=>"btn btn-success"]) !!}
                     </div>
                     {!! Form::close() !!}
                 </div>
@@ -157,10 +157,10 @@
                     <div class="row">
 
                         <div class="col-md-6">
-                            <h4>Organiser Design</h4>
+                            <h4>{{trans('ManageOrganiser/Customize.organiser_design')}}</h4>
 
                             <div class="form-group">
-                                {!! Form::label('page_header_bg_color', 'Header Background Color', ['class'=>'control-label required ']) !!}
+                                {!! Form::label('page_header_bg_color', trans('ManageOrganiser/Customize.header_background_color'), ['class'=>'control-label required ']) !!}
                                 {!!  Form::input('text', 'page_header_bg_color', Input::old('page_header_bg_color'),
                                                             [
                                                             'class'=>'form-control colorpicker',
@@ -168,7 +168,7 @@
                                                             ])  !!}
                             </div>
                             <div class="form-group">
-                                {!! Form::label('page_text_color', 'Text Color', ['class'=>'control-label required ']) !!}
+                                {!! Form::label('page_text_color', trans('ManageOrganiser/Customize.text_color'), ['class'=>'control-label required ']) !!}
                                 {!!  Form::input('text', 'page_text_color', Input::old('page_text_color'),
                                                             [
                                                             'class'=>'form-control colorpicker',
@@ -176,7 +176,7 @@
                                                             ])  !!}
                             </div>
                             <div class="form-group">
-                                {!! Form::label('page_bg_color', 'Background Color', ['class'=>'control-label required ']) !!}
+                                {!! Form::label('page_bg_color', trans('ManageOrganiser/Customize.background_color'), ['class'=>'control-label required ']) !!}
                                 {!!  Form::input('text', 'page_bg_color', Input::old('page_bg_color'),
                                                             [
                                                             'class'=>'form-control colorpicker',
@@ -188,7 +188,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <h4>Organiser Page Preview</h4>
+                            <h4>{{trans('ManageOrganiser/Customize.organiser_page_preview')}}</h4>
                             <div class="preview iframe_wrap"
                                  style="overflow:hidden; height: 500px; border: 1px solid #ccc; overflow: hidden;">
                                 <iframe id="previewIframe"
@@ -202,7 +202,7 @@
                     </div>
 
                     <div class="panel-footer mt15 text-right">
-                        {!! Form::submit('Save Changes', ['class'=>"btn btn-success"]) !!}
+                        {!! Form::submit(trans('ManageOrganiser/Customize.save_changes'), ['class'=>"btn btn-success"]) !!}
                     </div>
 
                     {!! Form::close() !!}
@@ -211,5 +211,3 @@
             </div>
         </div>
 @stop
-
-
