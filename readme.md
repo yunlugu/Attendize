@@ -13,6 +13,7 @@ cp .env.example .env # 请配置你的env
 # then
 composer install
 php artisan attendize:install
+```
 
 
 ## Woking on
