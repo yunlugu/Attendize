@@ -50,7 +50,7 @@ class EventController extends MyBaseController
 
         $event->title = $request->get('title');
         $event->apartment = $request->get('apartment');
-
+        $event->tags = $request->get('tags');
         $event->description = strip_tags($request->get('description'));
         $event->start_date = $request->get('start_date') ? Carbon::createFromFormat('d-m-Y H:i',
             $request->get('start_date')) : null;

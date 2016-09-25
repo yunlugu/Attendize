@@ -3,6 +3,7 @@
 @section('title')
     @parent
     Organiser Events
+    {{trans('ManageOrganiser/Events.organiser_events')}}
 @stop
 
 @section('page_title')
@@ -26,14 +27,14 @@
     <div class="col-md-9">
         <div class="btn-toolbar">
             <div class="btn-group btn-group-responsive">
-                <a href="#" data-modal-id="CreateEvent" data-href="{{route('showCreateEvent', ['organiser_id' => @$organiser->id])}}" class="btn btn-success loadModal"><i class="ico-plus"></i> Create Event</a>
+                <a href="#" data-modal-id="CreateEvent" data-href="{{route('showCreateEvent', ['organiser_id' => @$organiser->id])}}" class="btn btn-success loadModal"><i class="ico-plus"></i> {{trans('ManageOrganiser/Events.create_event')}}</a>
             </div>
         </div>
     </div>
     <div class="col-md-3">
         {!! Form::open(array('url' => route('showOrganiserEvents', ['organiser_id'=>$organiser->id]), 'method' => 'get')) !!}
         <div class="input-group">
-            <input name="q" value="{{$search['q'] or ''}}" placeholder="Search Events.." type="text" class="form-control">
+            <input name="q" value="{{$search['q'] or ''}}" placeholder="{{trans('ManageOrganiser/Events.search_events')}}" type="text" class="form-control">
         <span class="input-group-btn">
             <button class="btn btn-default" type="submit"><i class="ico-search"></i></button>
         </span>
@@ -57,9 +58,9 @@
             <div class="col-md-2 col-xs-6 col-md-offset-7">
                 <div class="order_options">
                     {!!Form::select('sort_by_select', [
-                        'start_date' => 'Start date',
-                        'created_at' => 'Created',
-                        'title' => 'Event title'
+                        'start_date' => trans('ManageOrganiser/Events.start_date'),
+                        'created_at' => trans('ManageOrganiser/Events.created'),
+                        'title' => trans('ManageOrganiser/Events.event_title')
 
                         ], $search['sort_by'], ['class' => 'form-control pull right'])!!}
                 </div>

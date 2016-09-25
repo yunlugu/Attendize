@@ -3,6 +3,7 @@
 return [
     'tickets_sold' => 'Tickets Sold',
     'revenue' => 'Revenue',
-    'edit' => 'Edit'
+    'edit' => 'Edit'，
+    'manage' => 'Manage',
 
 ];

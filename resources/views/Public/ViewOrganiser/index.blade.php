@@ -84,7 +84,7 @@
                     <div class="date-and-category">
                         <div class="date">{{$event->start_date->format('Y-m-d h:i')}}</div>
                         <div class="categories">
-                            <a href="/categories/技术部/">技术部</a>
+                            <a href="/categories/技术部/">{{$event->apartment}}</a>
                         </div>
                     </div>
                     <!-- Post Excerpt -->
@@ -93,8 +93,11 @@
                     </div>
                     <!-- Post Tags -->
                     <div class="tags">
-
-                        <a class="tag" href="/tags/php/">php</a> <a class="tag" href="/tags/数组/">数组</a>
+                    @if(!empty($event->tags))
+                        @foreach(explode(',', $event->tags) as $tag)
+                        <a class="tag" href="#">{{$tag}}</a>
+                        @endforeach
+                    @endif
                     </div>
                 </div>
             </div>

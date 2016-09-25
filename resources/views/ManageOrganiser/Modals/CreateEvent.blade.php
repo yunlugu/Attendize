@@ -18,7 +18,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     {!! Form::label('title', '培训主题', array('class'=>'control-label required')) !!}
-                                    {!!  Form::text('title', Input::old('title'),array('class'=>'form-control','placeholder'=>'E.g: '.Auth::user()->first_name.'\'s International Conference' ))  !!}
+                                    {!!  Form::text('title', Input::old('title'),array('class'=>'form-control','placeholder'=>'' ))  !!}
                                 </div>
                             </div>
 
@@ -48,6 +48,29 @@
                                         ], null, ['class' => 'form-control'])!!}
                                 </div>
                             </div> -->
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <link rel="stylesheet" href="{{url('plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css')}}" />
+                                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+                                    <script src="{{url('plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')}}"></script>
+                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                                    {!! Form::label('tags', '标签', array('class'=>'control-label required')) !!}
+                                    <input id="tagsinput" type="text" value="{{Input::old('tags')}}" class="form-control" data-role="tagsinput">
+                                    <!-- {!!  Form::text('tags', Input::old('tags'),array('class'=>'form-control','data-role'=>'tagsinput' ))  !!} -->
+                                    {!!  Form::hidden('tags', Input::old('tags'))  !!}
+                                    <script type="text/javascript">
+                                        $(function(){
+                                            $("#tagsinput").change(function(){
+                                                $('#tags').val($(this).val());
+                                            });
+                                        })
+
+                                    </script>
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="form-group custom-theme">
