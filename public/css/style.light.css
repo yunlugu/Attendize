@@ -616,6 +616,14 @@ h6 {
   color: #fff;
   background-color: #1999ec;
 }
+.post-item-wrapper .date-and-category .speaker {
+  color: #fff;
+  background-color: #009900;
+}
+.post-item-wrapper .date-and-category .speaker > a {
+  color: #fff;
+  background-color: #009900;
+}
 .post-item-wrapper .tags {
   overflow: hidden;
 }

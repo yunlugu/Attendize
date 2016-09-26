@@ -49,6 +49,7 @@ class EventController extends MyBaseController
         }
 
         $event->title = $request->get('title');
+        $event->speaker = $request->get('speaker');
         $event->apartment = $request->get('apartment');
         $event->tags = $request->get('tags');
         $event->description = strip_tags($request->get('description'));
@@ -227,7 +228,9 @@ class EventController extends MyBaseController
 
         $event->is_live = $request->get('is_live');
         $event->title = $request->get('title');
+        $event->speaker = $request->get('speaker');
         $event->apartment = $request->get('apartment');
+        $event->tags = $request->get('tags');
         $event->description = strip_tags($request->get('description'));
         $event->start_date = $request->get('start_date') ? Carbon::createFromFormat('d-m-Y H:i',
             $request->get('start_date')) : null;

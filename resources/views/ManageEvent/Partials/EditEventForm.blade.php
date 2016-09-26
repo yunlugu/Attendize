@@ -37,6 +37,16 @@
                         ], null, ['class' => 'form-control'])!!}
                 </div>
             </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    {!! Form::label('speaker', '主讲人', array('class'=>'control-label required')) !!}
+                    {!!  Form::text('speaker', Input::old('speaker'),
+                                                array(
+                                                'class'=>'form-control',
+                                                'placeholder'=>''
+                                                ))  !!}
+                </div>
+            </div>
         </div>
 
 

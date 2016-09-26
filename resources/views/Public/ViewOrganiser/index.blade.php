@@ -83,8 +83,11 @@
                     <!-- Post Date and Categories -->
                     <div class="date-and-category">
                         <div class="date">{{$event->start_date->format('Y-m-d h:i')}}</div>
+                        <div class="speaker">
+                            <a href="#">{{$event->speaker}}</a>
+                        </div>
                         <div class="categories">
-                            <a href="/categories/技术部/">{{$event->apartment}}</a>
+                            <a href="#">{{$event->apartment}}</a>
                         </div>
                     </div>
                     <!-- Post Excerpt -->

@@ -23,6 +23,8 @@ php artisan attendize:install
 - 报名
 - 签到
 - 员工信息管理
+- 角色分配
+- 注册
 
 ## 功能
 
