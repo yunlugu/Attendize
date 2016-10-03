@@ -24,6 +24,7 @@ var checkinApp = new Vue({
     },
 
     ready: function () {
+
     },
 
     methods: {
@@ -81,7 +82,7 @@ var checkinApp = new Vue({
                 this.scanResultType = res.data.status;
 
             }, function (response) {
-                this.scanResultMessage = 'Something went wrong! Refresh the page and try again';
+                this.scanResultMessage = '扫描失败！刷新页面并重试';
             });
         },
 
@@ -164,7 +165,15 @@ var checkinApp = new Vue({
             track = this.stream.getTracks()[0];
             track.stop();
             this.fetchAttendees();
+        },
+        fetchDepartments: function () {
+            this.$http.post(Attendize.checkInSearchRoute, {q: this.searchTerm}).then(function (res) {
+                this.attendees = res.data;
+                this.searchResultsCount = (Object.keys(res.data).length);
+            }, function () {
+                console.log('Failed to fetch attendees')
+            });
         }
+
     }
 });
-

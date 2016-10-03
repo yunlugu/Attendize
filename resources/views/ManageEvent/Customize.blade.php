@@ -3,7 +3,7 @@
 
 @section('title')
     @parent
-    Customize Event
+    自定义培训
 @stop
 
 @section('top_nav')
@@ -16,7 +16,7 @@
 
 @section('page_title')
     <i class="ico-cog mr5"></i>
-    Customize Event
+    自定义培训
 @stop
 
 @section('page_header')
@@ -184,26 +184,24 @@
             <!-- tab -->
             <ul class="nav nav-tabs">
                 <li data-route="{{route('showEventCustomizeTab', ['event_id' => $event->id, 'tab' => 'general'])}}"
-                    class="{{($tab == 'general' || !$tab) ? 'active' : ''}}"><a href="#general" data-toggle="tab">General</a>
+                    class="{{($tab == 'general' || !$tab) ? 'active' : ''}}"><a href="#general" data-toggle="tab">基本设置</a>
                 </li>
                 <li data-route="{{route('showEventCustomizeTab', ['event_id' => $event->id, 'tab' => 'design'])}}"
-                    class="{{$tab == 'design' ? 'active' : ''}}"><a href="#design" data-toggle="tab">Event Page
-                        Design</a></li>
-                <li data-route="{{route('showEventCustomizeTab', ['event_id' => $event->id, 'tab' => 'order_page'])}}"
+                    class="{{$tab == 'design' ? 'active' : ''}}"><a href="#design" data-toggle="tab">培训详情页设定</a></li>
+                <!-- <li data-route="{{route('showEventCustomizeTab', ['event_id' => $event->id, 'tab' => 'order_page'])}}"
                     class="{{$tab == 'order_page' ? 'active' : ''}}"><a href="#order_page" data-toggle="tab">Order
-                        Form</a></li>
+                        Form</a></li> -->
 
                 <li data-route="{{route('showEventCustomizeTab', ['event_id' => $event->id, 'tab' => 'social'])}}"
-                    class="{{$tab == 'social' ? 'active' : ''}}"><a href="#social" data-toggle="tab">Social</a></li>
-                <li data-route="{{route('showEventCustomizeTab', ['event_id' => $event->id, 'tab' => 'affiliates'])}}"
+                    class="{{$tab == 'social' ? 'active' : ''}}"><a href="#social" data-toggle="tab">分享</a></li>
+                <!-- <li data-route="{{route('showEventCustomizeTab', ['event_id' => $event->id, 'tab' => 'affiliates'])}}"
                     class="{{$tab == 'affiliates' ? 'active' : ''}}"><a href="#affiliates"
-                                                                        data-toggle="tab">Affiliates</a></li>
-                <li data-route="{{route('showEventCustomizeTab', ['event_id' => $event->id, 'tab' => 'fees'])}}"
-                    class="{{$tab == 'fees' ? 'active' : ''}}"><a href="#fees" data-toggle="tab">Service Fees</a></li>
-                <li data-route="{{route('showEventCustomizeTab', ['event_id' => $event->id, 'tab' => 'ticket_design'])}}"
+                                                                        data-toggle="tab">Affiliates</a></li> -->
+                <!-- <li data-route="{{route('showEventCustomizeTab', ['event_id' => $event->id, 'tab' => 'fees'])}}"
+                    class="{{$tab == 'fees' ? 'active' : ''}}"><a href="#fees" data-toggle="tab">Service Fees</a></li> -->
+                <!-- <li data-route="{{route('showEventCustomizeTab', ['event_id' => $event->id, 'tab' => 'ticket_design'])}}"
                     class="{{$tab == 'ticket_design' ? 'active' : ''}}"><a href="#ticket_design" data-toggle="tab">Ticket
-                        Design</a></li>
-
+                        Design</a></li> -->
             </ul>
             <!--/ tab -->
             <!-- tab content -->
@@ -212,58 +210,6 @@
                     @include('ManageEvent.Partials.EditEventForm', ['event'=>$event, 'organisers'=>\Auth::user()->account->organisers])
                 </div>
 
-                <div class="tab-pane {{$tab == 'affiliates' ? 'active' : ''}}" id="affiliates">
-
-                    <h4>Affiliate Tracking</h4>
-
-                    <div class="well">
-                        Keeping track of who is generating sales for your event is extremely easy.
-                        Simply create a referral link using the box below and share the link with your affiliates /
-                        event promoters.
-
-                        <br><br>
-
-                        <input type="text" id="affiliateGenerator" name="affiliateGenerator" class="form-control"/>
-
-                        <div style="display:none; margin-top:10px; " id="referralUrl">
-                            <input onclick="this.select();" type="text" name="affiliateLink" class="form-control"/>
-                        </div>
-                    </div>
-
-                    @if($event->affiliates->count())
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Affiliate Name</th>
-                                    <th>Visits Generated</th>
-                                    <th>Ticket Sales Generated</th>
-                                    <th>Sales Volume Generated</th>
-                                    <th>Last Referral</th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                @foreach($event->affiliates as $affiliate)
-                                    <tr>
-                                        <td>{{ $affiliate->name }}</td>
-                                        <td>{{ $affiliate->visits }}</td>
-                                        <td>{{ $affiliate->tickets_sold }}</td>
-                                        <td>{{ money($affiliate->sales_volume, $event->currency) }}</td>
-                                        <td>{{ $affiliate->updated_at->format('M dS H:i A') }}</td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    @else
-                        <div class="alert alert-info">
-                            No affiliate referrals yet.
-                        </div>
-                    @endif
-
-
-                </div>
                 <div class="tab-pane {{$tab == 'social' ? 'active' : ''}}" id="social">
                     <div class="well hide">
                         <h5>The following short codes are available for use:</h5>
@@ -277,7 +223,7 @@
 
                     {!! Form::model($event, array('url' => route('postEditEventSocial', ['event_id' => $event->id]), 'class' => 'ajax ')) !!}
 
-                    <h4>Social Settings</h4>
+                    <h4>分享设置</h4>
 
                     <div class="form-group hide">
 
@@ -294,7 +240,7 @@
 
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Share buttons to show.</label>
+                        <label class="control-label">要展示的分享按钮</label>
                         <br>
 
                         <div class="custom-checkbox mb5">
@@ -345,7 +291,7 @@
 
                             {!! Form::hidden('bg_type', $event->bg_type) !!}
 
-                            <h4>Background Options</h4>
+                            <h4>背景设置</h4>
 
                             <div class="panel-group" id="bgOptions">
 
@@ -354,7 +300,7 @@
                                         <h4 class="panel-title">
                                             <a data-toggle="collapse" data-parent="#bgOptions" href="#bgColor"
                                                class="{{($event->bg_type == 'color') ? '' : 'collapsed'}}">
-                                                <span class="arrow mr5"></span> Use a colour for the background
+                                                <span class="arrow mr5"></span> 背景使用纯色
                                             </a>
                                         </h4>
                                     </div>
@@ -371,7 +317,7 @@
                                         <h4 class="panel-title">
                                             <a data-toggle="collapse" data-parent="#bgOptions" href="#bgImage"
                                                class="{{($event->bg_type == 'image') ? '' : 'collapsed'}}">
-                                                <span class="arrow mr5"></span> Select from available images
+                                                <span class="arrow mr5"></span> 选择背景图片
                                             </a>
                                         </h4>
                                     </div>
@@ -398,19 +344,19 @@
                             </div>
                             <div class="panel-footer mt15 text-right">
                                 <span class="uploadProgress" style="display:none;"></span>
-                                {!! Form::submit('Save Changes', ['class'=>"btn btn-success"]) !!}
+                                {!! Form::submit('保存更改', ['class'=>"btn btn-success"]) !!}
                             </div>
 
                             <div class="panel-footer ar hide">
                                 {!! Form::button('Cancel', ['class'=>"btn modal-close btn-danger",'data-dismiss'=>'modal']) !!}
-                                {!! Form::submit('Save Changes', ['class'=>"btn btn-success"]) !!}
+                                {!! Form::submit('保存更改', ['class'=>"btn btn-success"]) !!}
                             </div>
 
                             {!! Form::close() !!}
 
                         </div>
                         <div class="col-sm-6">
-                            <h4>Event Page Preview</h4>
+                            <h4>详情页预览</h4>
 
                             <div class="iframe_wrap" style="overflow:hidden; height: 600px; border: 1px solid #ccc;">
                                 <iframe id="previewIframe"
@@ -421,176 +367,6 @@
                             </div>
                         </div>
                     </div>
-
-                </div>
-                <div class="tab-pane {{$tab == 'fees' ? 'active' : ''}}" id="fees">
-                    {!! Form::model($event, array('url' => route('postEditEventFees', ['event_id' => $event->id]), 'class' => 'ajax')) !!}
-                    <h4>Organiser Fees</h4>
-
-                    <div class="well">
-                        These are optional fees you can include in the cost of each ticket. This charge will appear on
-                        buyer's invoices as '<b>BOOKING FEES</b>'.
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('organiser_fee_percentage', 'Service Fee Percentage', array('class'=>'control-label required')) !!}
-                        {!!  Form::text('organiser_fee_percentage', $event->organiser_fee_percentage, [
-                            'class' => 'form-control',
-                            'placeholder' => '0'
-                        ])  !!}
-                        <div class="help-block">
-                            e.g: enter <b>3.5</b> for <b>3.5%</b>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('organiser_fee_fixed', 'Service Fee Fixed Price', array('class'=>'control-label required')) !!}
-                        {!!  Form::text('organiser_fee_fixed', null, [
-                            'class' => 'form-control',
-                            'placeholder' => '0.00'
-                        ])  !!}
-                        <div class="help-block">
-                            e.g: enter <b>1.25</b> for <b>{{$event->currency_symbol}}1.25</b>
-                        </div>
-                    </div>
-                    <div class="panel-footer mt15 text-right">
-                        {!! Form::submit('Save Changes', ['class'=>"btn btn-success"]) !!}
-                    </div>
-                    {!! Form::close() !!}
-                </div>
-                <div class="tab-pane" id="social">
-                    <h4>Social Settings</h4>
-
-                    <div class="form-group">
-                        <div class="checkbox custom-checkbox">
-                            {!! Form::label('event_page_show_map', 'Show map on event page?', array('id' => 'customcheckbox', 'class'=>'control-label')) !!}
-                            {!! Form::checkbox('event_page_show_map', 1, false) !!}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('event_page_show_social_share', 'Show social share buttons?', array('class'=>'control-label')) !!}
-                        {!! Form::checkbox('event_page_show_social_share', 1, false) !!}
-                    </div>
-
-                </div>
-
-                <div class="tab-pane {{$tab == 'order_page' ? 'active' : ''}}" id="order_page">
-                    {!! Form::model($event, array('url' => route('postEditEventOrderPage', ['event_id' => $event->id]), 'class' => 'ajax ')) !!}
-                    <h4>Order Page Settings</h4>
-
-                    <div class="form-group">
-                        {!! Form::label('pre_order_display_message', 'Message to display to attendees before they complete their order.', array('class'=>'control-label ')) !!}
-
-                        {!!  Form::textarea('pre_order_display_message', $event->pre_order_display_message, [
-                            'class' => 'form-control',
-                            'rows' => 4
-                        ])  !!}
-                        <div class="help-block">
-                            This message will be displayed to attendees immediately before they finalize their order.
-                        </div>
-
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('post_order_display_message', 'Message to display to attendees after they have completed their order.', array('class'=>'control-label ')) !!}
-
-                        {!!  Form::textarea('post_order_display_message', $event->post_order_display_message, [
-                            'class' => 'form-control',
-                            'rows' => 4
-                        ])  !!}
-                        <div class="help-block">
-                            This message will be displayed to attendees once they have successfully completed the
-                            checkout process.
-                        </div>
-                    </div>
-
-
-                        <h4>Offline Payment Settings</h4>
-                        <div class="form-group">
-                            <div class="custom-checkbox">
-                                <input {{ $event->enable_offline_payments ? 'checked="checked"' : '' }} data-toggle="toggle" id="enable_offline_payments" name="enable_offline_payments" type="checkbox" value="1">
-                                <label for="enable_offline_payments">Enable Offline Payments</label>
-                            </div>
-                        </div>
-                        <div class="offline_payment_details" style="display: none;">
-                            {!! Form::textarea('offline_payment_instructions', $event->offline_payment_instructions, ['class' => 'form-control editable']) !!}
-                            <div class="help-block">
-                                Enter instructions on how attendees can make payment offline.
-                            </div>
-                        </div>
-
-
-                    <div class="panel-footer mt15 text-right">
-                        {!! Form::submit('Save Changes', ['class'=>"btn btn-success"]) !!}
-                    </div>
-
-                    {!! Form::close() !!}
-
-                </div>
-
-
-                <div class="tab-pane {{$tab == 'ticket_design' ? 'active' : ''}}" id="ticket_design">
-                    {!! Form::model($event, array('url' => route('postEditEventTicketDesign', ['event_id' => $event->id]), 'class' => 'ajax ')) !!}
-                    <h4>Ticket Design</h4>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {!! Form::label('ticket_border_color', 'Ticket Border Color', ['class'=>'control-label required ']) !!}
-                                {!!  Form::input('text', 'ticket_border_color', Input::old('ticket_border_color'),
-                                                            [
-                                                            'class'=>'form-control colorpicker',
-                                                            'placeholder'=>'#000000'
-                                                            ])  !!}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {!! Form::label('ticket_bg_color', 'Ticket Background Color', ['class'=>'control-label required ']) !!}
-                                {!!  Form::input('text', 'ticket_bg_color', Input::old('ticket_bg_color'),
-                                                            [
-                                                            'class'=>'form-control colorpicker',
-                                                            'placeholder'=>'#FFFFFF'
-                                                            ])  !!}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {!! Form::label('ticket_text_color', 'Ticket Text Color', ['class'=>'control-label required ']) !!}
-                                {!!  Form::input('text', 'ticket_text_color', Input::old('ticket_text_color'),
-                                                            [
-                                                            'class'=>'form-control colorpicker',
-                                                            'placeholder'=>'#000000'
-                                                            ])  !!}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {!! Form::label('ticket_sub_text_color', 'Ticket Sub Text Color', ['class'=>'control-label required ']) !!}
-                                {!!  Form::input('text', 'ticket_sub_text_color', Input::old('ticket_border_color'),
-                                                            [
-                                                            'class'=>'form-control colorpicker',
-                                                            'placeholder'=>'#000000'
-                                                            ])  !!}
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                {!! Form::label('is_1d_barcode_enabled', 'Show 1D barcode on tickets', ['class' => 'control-label required']) !!}
-                                {!! Form::select('is_1d_barcode_enabled', [1 => 'Yes', 0 => 'No'], $event->is_1d_barcode_enabled, ['class'=>'form-control']) !!}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <h4>Ticket Preview</h4>
-                            @include('ManageEvent.Partials.TicketDesignPreview')
-                        </div>
-                    </div>
-                    <div class="panel-footer mt15 text-right">
-                        {!! Form::submit('Save Changes', ['class'=>"btn btn-success"]) !!}
-                    </div>
-
-                    {!! Form::close() !!}
 
                 </div>
 

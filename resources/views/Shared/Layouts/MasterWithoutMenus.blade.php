@@ -10,6 +10,9 @@
         @yield('head')
 
         <!--JS-->
+        {!! HTML::script('vendor/vue/dist/vue.min.js') !!}
+        {!! HTML::script('vendor/vue-resource/dist/vue-resource.min.js') !!}
+
        {!! HTML::script('vendor/jquery/dist/jquery.min.js') !!}
         <!--/JS-->
 

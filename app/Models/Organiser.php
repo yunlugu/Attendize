@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Str;
+use DB;
 
 class Organiser extends MyBaseModel
 {
@@ -59,6 +60,16 @@ class Organiser extends MyBaseModel
         return $this->hasManyThrough('\App\Models\Attendee', '\App\Models\Event');
     }
 
+    public function departments(){
+        return $this->hasMany('App\Models\Department');
+    }
+
+    public function members()
+    {
+        return $this->hasMany('\App\Models\Member');
+    }
+
+
     /**
      * Get the orders related to an organiser
      *
@@ -112,4 +123,8 @@ class Organiser extends MyBaseModel
     public function getDailyStats()
     {
     }
+
+    // public function getDepartmentsAttribute() {
+    //     return DB::select('select * from departments where organiser_id = ?', [$this->id]);
+    // }
 }

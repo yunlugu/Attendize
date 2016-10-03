@@ -18,6 +18,7 @@ class Account extends MyBaseModel
     protected $rules = [
         'first_name' => ['required'],
         'last_name'  => ['required'],
+        'full_name' => ['required'],
         'email'      => ['required', 'email'],
     ];
 
@@ -43,6 +44,7 @@ class Account extends MyBaseModel
     protected $fillable = [
         'first_name',
         'last_name',
+        'full_name',
         'email',
         'timezone_id',
         'date_format_id',

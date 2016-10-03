@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Attendee;
+use App\Models\Member;
 use App\Models\Event;
 use Carbon\Carbon;
 use DB;
@@ -129,25 +130,37 @@ class EventCheckInController extends MyBaseController
      */
     public function postCheckInAttendeeQr($event_id, Request $request)
     {
+        //思路：使用个人二维码签到，插入新一条记录，而不是验证已经报名的。
+
         $event = Event::scope()->findOrFail($event_id);
 
         $qrcodeToken = $request->get('attendee_reference');
-        $attendee = Attendee::scope()->withoutCancelled()
-            ->join('tickets', 'tickets.id', '=', 'attendees.ticket_id')
-            ->where(function ($query) use ($event, $qrcodeToken) {
-                $query->where('attendees.event_id', $event->id)
-                    ->where('attendees.private_reference_number', $qrcodeToken);
-            })->select([
-                'attendees.id',
-                'attendees.order_id',
-                'attendees.first_name',
-                'attendees.last_name',
-                'attendees.email',
-                'attendees.reference_index',
-                'attendees.arrival_time',
-                'attendees.has_arrived',
-                'tickets.title as ticket',
-            ])->first();
+        $member = Member::where('api_token',  $qrcodeToken)->firstOrFail();
+
+        $attendee = new Attendee();
+        $attendee_data['event_id'] = $event->id;
+        $attendee_data['member_id'] = $member->id;
+        $attendee_data['has_arrived'] = 1;
+        $attendee_data['private_reference_number'] = $qrcodeToken;
+        $attendee_data['email'] = $member->email;
+        $attendee = Attendee::create($attendee_data);
+
+        // $attendee = Attendee::scope()->withoutCancelled()
+        //     ->join('tickets', 'tickets.id', '=', 'attendees.ticket_id')
+        //     ->where(function ($query) use ($event, $qrcodeToken) {
+        //         $query->where('attendees.event_id', $event->id)
+        //             ->where('attendees.private_reference_number', $qrcodeToken);
+        //     })->select([
+        //         'attendees.id',
+        //         'attendees.order_id',
+        //         'attendees.first_name',
+        //         'attendees.last_name',
+        //         'attendees.email',
+        //         'attendees.reference_index',
+        //         'attendees.arrival_time',
+        //         'attendees.has_arrived',
+        //         'tickets.title as ticket',
+        //     ])->first();
 
         if (is_null($attendee)) {
             return response()->json([
@@ -156,35 +169,35 @@ class EventCheckInController extends MyBaseController
             ]);
         }
 
-        $relatedAttendesCount = Attendee::where('id', '!=', $attendee->id)
-            ->where([
-                'order_id'    => $attendee->order_id,
-                'has_arrived' => false
-            ])->count();
+        // $relatedAttendesCount = Attendee::where('id', '!=', $attendee->id)
+        //     ->where([
+        //         'order_id'    => $attendee->order_id,
+        //         'has_arrived' => false
+        //     ])->count();
 
-        if ($relatedAttendesCount >= 1) {
-            $confirmOrderTicketsRoute = route('confirmCheckInOrderTickets', [$event->id, $attendee->order_id]);
+        // if ($relatedAttendesCount >= 1) {
+        //     $confirmOrderTicketsRoute = route('confirmCheckInOrderTickets', [$event->id, $attendee->order_id]);
+        //
+        //     /*
+        //      * @todo Incorporate this feature into the new design
+        //      */
+        //     //$appendedText = '<br><br><form class="ajax" action="' . $confirmOrderTicketsRoute . '" method="POST">' . csrf_field() . '<button class="btn btn-primary btn-sm" type="submit"><i class="ico-ticket"></i> Check in all tickets associated to this order</button></form>';
+        // } else {
+        //     $appendedText = '';
+        // }
 
-            /*
-             * @todo Incorporate this feature into the new design
-             */
-            //$appendedText = '<br><br><form class="ajax" action="' . $confirmOrderTicketsRoute . '" method="POST">' . csrf_field() . '<button class="btn btn-primary btn-sm" type="submit"><i class="ico-ticket"></i> Check in all tickets associated to this order</button></form>';
-        } else {
-            $appendedText = '';
-        }
+        // if ($attendee->has_arrived) {
+        //     return response()->json([
+        //         'status'  => 'error',
+        //         'message' => 'Attendee already checked in at ' . $attendee->arrival_time->format('H:i A, F j') . $appendedText
+        //     ]);
+        // }
 
-        if ($attendee->has_arrived) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'Attendee already checked in at ' . $attendee->arrival_time->format('H:i A, F j') . $appendedText
-            ]);
-        }
-
-        Attendee::find($attendee->id)->update(['has_arrived' => true, 'arrival_time' => Carbon::now()]);
+        // Attendee::find($attendee->id)->update(['has_arrived' => true, 'arrival_time' => Carbon::now()]);
 
         return response()->json([
             'status'  => 'success',
-            'message' => 'Success !<br>Name: ' . $attendee->first_name . ' ' . $attendee->last_name . '<br>Reference: ' . $attendee->reference . '<br>Ticket: ' . $attendee->ticket . '.' . $appendedText
+            'message' => 'Success !<br>Name: ' . $member->full_name . '<br>email: ' . $attendee->email
         ]);
     }
 

@@ -2,21 +2,22 @@
 
 @section('message_content')
 
-<p>Hi {{$first_name}}</p>
+<p>Hi {{$full_name}}</p>
 <p>
-    Thank you for registering for {{ config('attendize.app_name') }}. We're thrilled to have you on board.
-</p>
-
-<p>
-    You can create you first event and confirm your email using the link below.
+    感谢注册云麓谷！请打开下面的链接进行确认登录！
 </p>
 
 <div style="padding: 5px; border: 1px solid #ccc;">
    {{route('confirmEmail', ['confirmation_code' => $confirmation_code])}}
 </div>
-<br><br>
 <p>
-    If you have any questions, feedback or suggestions feel free to reply to this email.
+    我的二维码：
+</p>
+<div class="barcode">
+    {!! DNS2D::getBarcodeSVG($api_token, "QRCODE") !!}
+</div>
+<p>
+    如果您有任何问题或者建议请回复此邮件！谢谢您的支持！
 </p>
 <p>
     Thank you

@@ -28,9 +28,11 @@ class Attendee extends MyBaseModel
         'email',
         'event_id',
         'order_id',
+        'member_id',
         'ticket_id',
         'account_id',
         'reference',
+        'private_reference_number',
         'has_arrived',
         'arrival_time'
     ];
@@ -77,7 +79,11 @@ class Attendee extends MyBaseModel
     {
         return $this->belongsTo('\App\Models\Event');
     }
-    
+    public function member()
+    {
+        return $this->belongsTo('\App\Models\Member');
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

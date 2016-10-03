@@ -1,14 +1,24 @@
 <?php
+/**
+* 用户注册控制器
+* @author monkeyWzr
+* @date 2016/10/2
+*/
 
 namespace App\Http\Controllers;
 
 use App\Attendize\Utils;
 use App\Models\Account;
 use App\Models\User;
+use App\Models\Organiser;
+use App\Models\Department;
+use App\Models\Member;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Mail;
 use Hash;
+use JavaScript;
+use DB;
 
 class UserSignupController extends Controller
 {
@@ -27,11 +37,15 @@ class UserSignupController extends Controller
     public function showSignup()
     {
         $is_attendize = Utils::isAttendize();
+        JavaScript::put([
+            'fetchDepartmentsRoute' => route('fetchDepartments', ['organiser_id' => 1]),
+            'fetchGroupsRoute' => route('fetchGroups'),
+        ]);
         return view('Public.LoginAndRegister.Signup', compact('is_attendize'));
     }
 
     /**
-     * Creates an account.
+     * 创建账户
      *
      * @param Request $request
      *
@@ -40,35 +54,41 @@ class UserSignupController extends Controller
     public function postSignup(Request $request)
     {
         $is_attendize = Utils::isAttendize();
+
         $this->validate($request, [
             'email'        => 'required|email|unique:users',
             'password'     => 'required|min:5|confirmed',
-            'first_name'   => 'required',
-            'terms_agreed' => $is_attendize ? 'required' : '',
+            'full_name'   => 'required',
+            // 'terms_agreed' => $is_attendize ? 'required' : '',
         ]);
 
-        $account_data = $request->only(['email', 'first_name', 'last_name']);
+        $organiser = Organiser::findOrfail(1);
+
+        $account_data = $request->only(['email', 'full_name']);
         $account_data['currency_id'] = config('attendize.default_currency');
         $account_data['timezone_id'] = config('attendize.default_timezone');
         $account = Account::create($account_data);
 
-        $user = new User();
-        $user_data = $request->only(['email', 'first_name', 'last_name']);
-        $user_data['password'] = Hash::make($request->get('password'));
-        $user_data['account_id'] = $account->id;
-        $user_data['is_parent'] = 1;
-        $user_data['is_registered'] = 1;
-        $user = User::create($user_data);
+        $member = new Member();
+        $member_data = $request->only(['email', 'full_name']);
+        $member_data['password'] = Hash::make($request->get('password'));
+        $member_data['account_id'] = $account->id;
+        $member_data['organiser_id'] = $organiser->id;
+        $member_data['department_id'] = $request->get('department');
+        $member_data['group_id'] = $request->get('group');
+        $member_data['is_parent'] = 1;
+        $member_data['is_registered'] = 1;
+        $member = Member::create($member_data);
 
-        if ($is_attendize) {
+        if (1) {
             // TODO: Do this async?
-            Mail::send('Emails.ConfirmEmail', ['first_name' => $user->first_name, 'confirmation_code' => $user->confirmation_code], function ($message) use ($request) {
+            Mail::send('Emails.ConfirmEmail', ['api_token' => $member->api_token, 'full_name' => $member->full_name, 'confirmation_code' => $member->confirmation_code, 'email_logo' => $organiser->logo_path], function ($message) use ($request) {
                 $message->to($request->get('email'), $request->get('first_name'))
-                    ->subject('Thank you for registering for Attendize');
+                    ->subject('欢迎加入云麓谷大家庭');
             });
         }
 
-        session()->flash('message', 'Success! You can now login.');
+        session()->flash('message', '注册成功！请登录');
 
         return redirect('login');
     }
@@ -81,20 +101,38 @@ class UserSignupController extends Controller
      */
     public function confirmEmail($confirmation_code)
     {
-        $user = User::whereConfirmationCode($confirmation_code)->first();
+        $member = Member::whereConfirmationCode($confirmation_code)->first();
 
-        if (!$user) {
+        if (!$member) {
             return view('Public.Errors.Generic', [
                 'message' => 'The confirmation code is missing or malformed.',
             ]);
         }
 
-        $user->is_confirmed = 1;
-        $user->confirmation_code = null;
-        $user->save();
+        $member->is_confirmed = 1;
+        $member->confirmation_code = null;
+        $member->save();
 
         session()->flash('message', 'Success! Your email is now verified. You can now login.');
 
         return redirect()->route('login');
+    }
+
+    public function test(){
+        Mail::send('Emails.ConfirmEmail', ['first_name' => 'wu', 'confirmation_code' => '123'], function ($message) {
+            $message->to('664032667@qq.com', 'wu')
+                ->subject('Thank you for registering for Attendize');
+        });
+    }
+
+    public function fetchDepartments($organiser_id) {
+        $departments = Organiser::find($organiser_id)->departments;
+        // var_dump($departments);
+        return response()->json($departments);
+    }
+    public function fetchGroups($department_id = 0) {
+        $groups = Department::find($department_id)->groups;
+        // var_dump($departments);
+        return response()->json($groups);
     }
 }

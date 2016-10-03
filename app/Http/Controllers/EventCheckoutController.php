@@ -627,6 +627,7 @@ class EventCheckoutController extends Controller
              * Queue up some tasks - Emails to be sent, PDFs etc.
              */
             Log::info('Firing the event');
+            //触发事件
             event(new OrderCompletedEvent($order));
 
 
@@ -723,4 +724,3 @@ class EventCheckoutController extends Controller
     }
 
 }
-

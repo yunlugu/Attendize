@@ -20,6 +20,8 @@ Route::post('install', [
     'uses' => 'InstallerController@postInstaller',
 ]);
 
+
+
 /*
  * Stripe connect return
  */
@@ -81,6 +83,7 @@ Route::group(['middleware' => ['installed']], function () {
         'as'   => 'showSignup',
     ]);
     Route::post('/signup', 'UserSignupController@postSignup');
+    Route::get('test', 'UserSignupController@test');
 
     /*
      * Confirm Email
@@ -88,6 +91,18 @@ Route::group(['middleware' => ['installed']], function () {
     Route::get('signup/confirm_email/{confirmation_code}', [
         'as'   => 'confirmEmail',
         'uses' => 'UserSignupController@confirmEmail',
+    ]);
+
+    /*
+     * Confirm Email
+     */
+    Route::get('fetch_departments/{organiser_id}', [
+        'as'   => 'fetchDepartments',
+        'uses' => 'UserSignupController@fetchDepartments',
+    ]);
+    Route::get('fetch_groups/{department_id?}', [
+        'as'   => 'fetchGroups',
+        'uses' => 'UserSignupController@fetchGroups',
     ]);
 });
 
@@ -239,6 +254,11 @@ Route::group(['middleware' => ['auth', 'first.run']], function () {
             'as'   => 'showOrganiserEvents',
             'uses' => 'OrganiserEventsController@showEvents',
         ]);
+        Route::get('{organiser_id}/members', [
+            'as'   => 'showOrganiserMembers',
+            'uses' => 'OrganiserMembersController@showMembers',
+        ]);
+
 
         Route::get('{organiser_id}/customize', [
             'as'   => 'showOrganiserCustomize',
@@ -473,6 +493,28 @@ Route::group(['middleware' => ['auth', 'first.run']], function () {
         Route::post('{event_id}/attendees/{attendee_id}/cancel', [
             'as'   => 'postCancelAttendee',
             'uses' => 'EventAttendeesController@postCancelAttendee',
+        ]);
+
+        Route::get('{organiser_id}/members/{member_id}/delete', [
+            'as'   => 'showDeleteMember',
+            'uses' => 'OrganiserMembersController@showDeleteMember',
+        ]);
+        Route::post('{organiser_id}/members/{member_id}/delete', [
+            'as'   => 'postDeleteMember',
+            'uses' => 'OrganiserMembersController@postDeleteMember',
+        ]);
+
+        Route::get('{organiser_id}/members/add', [
+            'as'   => 'showAddMember',
+            'uses' => 'OrganiserMembersController@showAddMember',
+        ]);
+        Route::post('{organiser_id}/members/add', [
+            'as'   => 'postAddMember',
+            'uses' => 'OrganiserMembersController@postAddMember',
+        ]);
+        Route::post('{organiser_id}/members/{member_id}/delete', [
+            'as'   => 'postDeleteMember',
+            'uses' => 'OrganiserMembersController@postDeleteMember',
         ]);
 
         /*

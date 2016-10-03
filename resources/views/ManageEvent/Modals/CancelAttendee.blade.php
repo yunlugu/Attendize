@@ -10,28 +10,17 @@
             </div>
             <div class="modal-body">
                 <p>
-                    Cancelling Attendees will remove them from the attendee list.
+                    取消该记录将会在列表中删除此条记录
                 </p>
 
-                <p>
-                    If you would like to refund the order which this attendee belongs to you can do so
-                    <a href="{{route('showEventOrders', ['event_id' => $attendee->event->id, 'q' => $attendee->order->order_reference])}}">here</a>.
-                </p>
                 <br>
                 <div class="form-group">
                     <div class="checkbox custom-checkbox">
                         <input type="checkbox" name="notify_attendee" id="notify_attendee" value="1">
-                        <label for="notify_attendee">&nbsp;&nbsp;Notify <b>{{$attendee->full_name}}</b> their ticket has been cancelled.</label>
+                        <label for="notify_attendee">&nbsp;&nbsp;通知 <b>{{$attendee->member->full_name}}</b> 他的签到记录将被取消</label>
                     </div>
                 </div>
-                @if(config('attendize.default_payment_gateway') == config('attendize.payment_gateway_stripe'))
-                    <div class="form-group">
-                            <div class="checkbox custom-checkbox">
-                                <input type="checkbox" name="refund_attendee" id="refund_attendee" value="1">
-                                <label for="refund_attendee">&nbsp;&nbsp;Refund <b>{{$attendee->full_name}}</b> for their ticket.</label>
-                            </div>
-                    </div>
-                @endif
+
             </div> <!-- /end modal body-->
             <div class="modal-footer">
                {!! Form::hidden('attendee_id', $attendee->id) !!}
@@ -42,4 +31,3 @@
        {!! Form::close() !!}
     </div>
 </div>
-

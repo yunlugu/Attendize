@@ -35,7 +35,7 @@ class EventAttendeesController extends MyBaseController
      */
     public function showAttendees(Request $request, $event_id)
     {
-        $allowed_sorts = ['first_name', 'email', 'ticket_id', 'order_reference'];
+        $allowed_sorts = ['full_name', 'email', 'created_at'];
 
         $searchQuery = $request->get('q');
         $sort_order = $request->get('sort_order') == 'asc' ? 'asc' : 'desc';
@@ -45,24 +45,15 @@ class EventAttendeesController extends MyBaseController
 
         if ($searchQuery) {
             $attendees = $event->attendees()
-                ->withoutCancelled()
-                ->join('orders', 'orders.id', '=', 'attendees.order_id')
                 ->where(function ($query) use ($searchQuery) {
-                    $query->where('orders.order_reference', 'like', $searchQuery . '%')
-                        ->orWhere('attendees.first_name', 'like', $searchQuery . '%')
-                        ->orWhere('attendees.email', 'like', $searchQuery . '%')
-                        ->orWhere('attendees.last_name', 'like', $searchQuery . '%');
+                    $query->Where('attendees.full_name', 'like', $searchQuery . '%')
+                        ->orWhere('attendees.email', 'like', $searchQuery . '%');
                 })
-                ->orderBy(($sort_by == 'order_reference' ? 'orders.' : 'attendees.') . $sort_by, $sort_order)
-                ->select('attendees.*', 'orders.order_reference')
+                ->orderBy('attendees.' . $sort_by, $sort_order)
+                ->select('*')
                 ->paginate();
         } else {
-            $attendees = $event->attendees()
-                ->join('orders', 'orders.id', '=', 'attendees.order_id')
-                ->withoutCancelled()
-                ->orderBy(($sort_by == 'order_reference' ? 'orders.' : 'attendees.') . $sort_by, $sort_order)
-                ->select('attendees.*', 'orders.order_reference')
-                ->paginate();
+            $attendees = $event->attendees()->paginate();
         }
 
         $data = [
@@ -607,7 +598,7 @@ class EventAttendeesController extends MyBaseController
      */
     public function showEditAttendee(Request $request, $event_id, $attendee_id)
     {
-        $attendee = Attendee::scope()->findOrFail($attendee_id);
+        $attendee = Attendee::findOrFail($attendee_id);
 
         $data = [
             'attendee' => $attendee,
@@ -670,12 +661,11 @@ class EventAttendeesController extends MyBaseController
      */
     public function showCancelAttendee(Request $request, $event_id, $attendee_id)
     {
-        $attendee = Attendee::scope()->findOrFail($attendee_id);
+        $attendee = Attendee::findOrFail($attendee_id);
 
         $data = [
             'attendee' => $attendee,
             'event'    => $attendee->event,
-            'tickets'  => $attendee->event->tickets->lists('title', 'id'),
         ];
 
         return view('ManageEvent.Modals.CancelAttendee', $data);
@@ -691,16 +681,16 @@ class EventAttendeesController extends MyBaseController
      */
     public function postCancelAttendee(Request $request, $event_id, $attendee_id)
     {
-        $attendee = Attendee::scope()->findOrFail($attendee_id);
+        $attendee = Attendee::findOrFail($attendee_id);
 
         if ($attendee->is_cancelled) {
             return response()->json([
                 'status'  => 'success',
-                'message' => 'Attendee Already Cancelled',
+                'message' => '签到记录已经取消',
             ]);
         }
 
-        $attendee->ticket->decrement('quantity_sold');
+        // $attendee->ticket->decrement('quantity_sold');
         $attendee->is_cancelled = 1;
         $attendee->save();
 

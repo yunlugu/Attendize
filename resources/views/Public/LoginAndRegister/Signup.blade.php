@@ -5,7 +5,7 @@ Sign Up
 @stop
 
 @section('content')
-    <div class="row">
+    <div id="app" class="row">
         <div class="col-md-7 col-md-offset-2">
             {!! Form::open(array('url' => 'signup', 'class' => 'panel')) !!}
             <div class="panel-body">
@@ -20,26 +20,15 @@ Sign Up
                     </div>
                 @endif
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group {{ ($errors->has('first_name')) ? 'has-error' : '' }}">
-                            {!! Form::label('first_name', 'First Name', ['class' => 'control-label required']) !!}
-                            {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
-                            @if($errors->has('first_name'))
-                                <p class="help-block">{{ $errors->first('first_name') }}</p>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="col-md-6">
+                <!-- <div class="row"> -->
                         <div class="form-group {{ ($errors->has('last_name')) ? 'has-error' : '' }}">
-                            {!! Form::label('last_name', 'Last Name', ['class' => 'control-label']) !!}
-                            {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
-                            @if($errors->has('last_name'))
-                                <p class="help-block">{{ $errors->first('last_name') }}</p>
+                            {!! Form::label('full_name', '姓名', ['class' => 'control-label']) !!}
+                            {!! Form::text('full_name', null, ['class' => 'form-control']) !!}
+                            @if($errors->has('full_name'))
+                                <p class="help-block">{{ $errors->first('full_name') }}</p>
                             @endif
                         </div>
-                    </div>
-                </div>
+                <!-- </div> -->
 
                 <div class="form-group {{ ($errors->has('email')) ? 'has-error' : '' }}">
                     {!! Form::label('email', 'Email', ['class' => 'control-label required']) !!}
@@ -47,6 +36,34 @@ Sign Up
                     @if($errors->has('email'))
                         <p class="help-block">{{ $errors->first('email') }}</p>
                     @endif
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group {{ ($errors->has('last_name')) ? 'has-error' : '' }}">
+                            {!! Form::label('department', '部门', ['class' => 'control-label']) !!}
+                            <select name="department" v-model="selected_department" class="form-control" @change="fetchGroups">
+                                <option v-for="department in departments" v-bind:value="department.id">
+                                    @{{{ department.department_name }}}
+                                </option>
+                            </select>
+                            @if($errors->has('department'))
+                                <p class="help-block">{{ $errors->first('department') }}</p>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group {{ ($errors->has('last_name')) ? 'has-error' : '' }}">
+                            {!! Form::label('group', '小组', ['class' => 'control-label']) !!}
+                            <select name="group" v-model="selected_group" class="form-control">
+                                <option v-for="group in groups" v-bind:value="group.id">
+                                    @{{{ group.group_name }}}
+                                </option>
+                            </select>
+                            @if($errors->has('group'))
+                                <p class="help-block">{{ $errors->first('group') }}</p>
+                            @endif
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group {{ ($errors->has('password')) ? 'has-error' : '' }}">
                     {!! Form::label('password', 'Password', ['class' => 'control-label required']) !!}
@@ -88,4 +105,5 @@ Sign Up
             {!! Form::close() !!}
         </div>
     </div>
+    {!! HTML::script('assets/javascript/signup.js') !!}
 @stop

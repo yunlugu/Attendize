@@ -60,20 +60,20 @@
         <div class="col-sm-4">
             <div class="stat-box">
                 <h3>
-                    {{$organiser->attendees->count()}}
+                    {{$organiser->members->count()}}
                 </h3>
             <span>
-                {{trans('ManageOrganiser/Dashboard.tickets_sold')}}
+                成员
             </span>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="stat-box">
                 <h3>
-                    {{ money($organiser->events->sum('sales_volume') + $organiser->events->sum('organiser_fees_volume'), $organiser->account->currency) }}
+                    {{ $organiser->departments->count() }}
                 </h3>
             <span>
-                {{trans('ManageOrganiser/Dashboard.sales_volume')}}
+                部门
             </span>
             </div>
         </div>
@@ -86,7 +86,8 @@
             <h4 style="margin-bottom: 25px;margin-top: 20px;">{{trans('ManageOrganiser/Dashboard.event_calender')}}</h4>
                     <div id="calendar"></div>
 
-
+        </div>
+        <div class="col-md-4">
             <h4 style="margin-bottom: 25px;margin-top: 20px;">{{trans('ManageOrganiser/Dashboard.upcoming_event')}}</h4>
             @if($upcoming_events->count())
                 @foreach($upcoming_events as $event)
@@ -94,42 +95,13 @@
                 @endforeach
             @else
                 <div class="alert alert-success alert-lg">
-                    {{[trans('ManageOrganiser/Dashboard.no_event_coming_up')]}} <a href="#"
+                    {{trans('ManageOrganiser/Dashboard.no_event_coming_up')}} <a href="#"
                                                      data-href="{{route('showCreateEvent', ['organiser_id' => $organiser->id])}}"
                                                      class=" loadModal">{{trans('ManageOrganiser/Dashboard.click_to_create_an_event')}}</a>
                 </div>
             @endif
-        </div>
-        <div class="col-md-4">
-            <h4 style="margin-bottom: 25px;margin-top: 20px;">{{trans('ManageOrganiser/Dashboard.recent_orders')}}</h4>
-              @if($organiser->orders->count())
-            <ul class="list-group">
-                    @foreach($organiser->orders()->orderBy('created_at', 'desc')->take(5)->get() as $order)
-                        <li class="list-group-item">
-                            <h6 class="ellipsis">
-                                <a href="{{ route('showEventDashboard', ['event_id' => $order->event->id]) }}">
-                                    {{ $order->event->title }}
-                                </a>
-                            </h6>
-                            <p class="list-group-text">
-                                <a href="{{ route('showEventOrders', ['event_id' => $order->event_id, 'q' => $order->order_reference]) }}">
-                                    <b>#{{ $order->order_reference }}</b></a> -
-                                <a href="{{ route('showEventAttendees', ['event_id'=>$order->event->id,'q'=>$order->order_reference]) }}">{{ $order->full_name }}</a>
-                                registered {{ $order->attendees()->withTrashed()->count() }} ticket{{ $order->attendees()->withTrashed()->count()  > 1 ? 's' : '' }}.
-                            </p>
-                            <h6>
-                                {{ $order->created_at->diffForHumans() }} &bull; <span
-                                        style="color: green;">{{ $order->event->currency_symbol }}{{ $order->amount }}</span>
-                            </h6>
-                        </li>
-                    @endforeach
-                  @else
-                            <div class="alert alert-success alert-lg">
-                                {{trans('ManageOrganiser/Dashboard.no_recent_orders')}}
-                            </div>
-                @endif
-            </ul>
 
         </div>
+
     </div>
 @stop

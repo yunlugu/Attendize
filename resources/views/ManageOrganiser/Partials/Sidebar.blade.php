@@ -15,6 +15,12 @@
                     <span class="text">{{trans('ManageOrganiser/Partials/Sidebar.events')}}</span>
                 </a>
             </li>
+            <li class="{{ Request::is('*events*') ? 'active' : '' }}">
+                <a href="{{route('showOrganiserMembers', array('organiser_id' => $organiser->id))}}">
+                    <span class="figure"><i class="ico-calendar"></i></span>
+                    <span class="text">人员管理</span>
+                </a>
+            </li>
 
             <li class="{{ Request::is('*customize*') ? 'active' : '' }}">
                 <a href="{{route('showOrganiserCustomize', array('organiser_id' => $organiser->id))}}">

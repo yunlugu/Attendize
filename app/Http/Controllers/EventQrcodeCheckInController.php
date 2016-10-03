@@ -40,6 +40,7 @@ class EventQrcodeCheckInController extends Controller
     {
         $event = Event::scope()->findOrFail($event_id);
 
+        //这个就是票上的二维码信息
         $qrcodeToken = $request->get('qrcode_token');
 
         $attendee = Attendee::scope()->withoutCancelled()

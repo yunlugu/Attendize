@@ -109,7 +109,7 @@
         </div>
     @else
         <div class="alert alert-info">
-            There are no {{ $panel_title }} to display.
+            没有培训.
         </div>
     @endif
 </div>
