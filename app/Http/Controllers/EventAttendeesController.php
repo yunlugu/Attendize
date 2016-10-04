@@ -701,67 +701,11 @@ class EventAttendeesController extends MyBaseController
 
         if ($request->get('notify_attendee') == '1') {
             Mail::send('Emails.notifyCancelledAttendee', $data, function ($message) use ($attendee) {
-                $message->to($attendee->email, $attendee->full_name)
+                $message->to($attendee->email, $attendee->member->full_name)
                     ->from(config('attendize.outgoing_email_noreply'), $attendee->event->organiser->name)
                     ->replyTo($attendee->event->organiser->email, $attendee->event->organiser->name)
-                    ->subject('You\'re ticket has been cancelled');
+                    ->subject('签到记录已被取消');
             });
-        }
-
-        if($request->get('refund_attendee') == '1') {
-
-            try {
-                // This does not account for an increased/decreased ticket price
-                // after the original purchase.
-                $refund_amount = $attendee->ticket->price;
-                $data['refund_amount'] = $refund_amount;
-
-                $gateway = Omnipay::create($attendee->order->payment_gateway->name);
-
-                // Only works for stripe
-                $gateway->initialize($attendee->order->account->getGateway($attendee->order->payment_gateway->id)->config);
-
-                $request = $gateway->refund([
-                    'transactionReference' => $attendee->order->transaction_id,
-                    'amount'               => $refund_amount,
-                    'refundApplicationFee' => false,
-                ]);
-
-                $response = $request->send();
-
-                if ($response->isSuccessful()) {
-
-                    // Update the attendee and their order
-                    $attendee->is_refunded = 1;
-                    $attendee->order->is_partially_refunded = 1;
-                    $attendee->order->amount_refunded += $refund_amount;
-
-                    $attendee->order->save();
-                    $attendee->save();
-
-                    // Let the user know that they have received a refund.
-                    Mail::send('Emails.notifyRefundedAttendee', $data, function ($message) use ($attendee) {
-                        $message->to($attendee->email, $attendee->full_name)
-                            ->from(config('attendize.outgoing_email_noreply'), $attendee->event->organiser->name)
-                            ->replyTo($attendee->event->organiser->email, $attendee->event->organiser->name)
-                            ->subject('You have received a refund from ' . $attendee->event->organiser->name);
-                    });
-                } else {
-                    $error_message = $response->getMessage();
-                }
-
-            } catch (\Exception $e) {
-                \Log::error($e);
-                $error_message = 'There has been a problem processing your refund. Please check your information and try again.';
-
-            }
-        }
-
-        if ($error_message) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => $error_message,
-            ]);
         }
 
         session()->flash('message', 'Successfully Cancelled Attenddee');
