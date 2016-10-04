@@ -14,8 +14,17 @@ class Department extends MyBaseModel
         return $this->belongsTo('\App\Models\Organiser');
     }
 
-    public function getGroupsAttribute()
+    public function members()
     {
-        return DB::select('select * from groups where department_id = ?', [$this->id]);
+        return $this->hasMany('\App\Models\Member');
     }
+
+    public function groups(){
+        return $this->hasMany('App\Models\Group');
+    }
+
+    // public function getGroupsAttribute()
+    // {
+    //     return DB::select('select * from groups where department_id = ?', [$this->id]);
+    // }
 }

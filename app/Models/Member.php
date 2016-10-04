@@ -47,6 +47,7 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
         'first_name',
         'last_name',
         'full_name',
+        'sex',
         'phone',
         'email',
         'password',
@@ -70,6 +71,16 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
     public function organiser()
     {
         return $this->belongsTo('\App\Models\Organiser');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo('\App\Models\Department');
+    }
+
+    public function group()
+    {
+        return $this->belongsTo('\App\Models\Group');
     }
 
     /**

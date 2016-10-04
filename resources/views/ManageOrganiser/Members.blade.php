@@ -58,7 +58,7 @@
 <div class="col-md-3">
    {!! Form::open(array('url' => route('showOrganiserMembers', ['organiser_id'=>$organiser->id,'sort_by'=>$sort_by]), 'method' => 'get')) !!}
     <div class="input-group">
-        <input name="q" value="{{$q or ''}}" placeholder="Search Attendees.." type="text" class="form-control" />
+        <input name="q" value="{{$q or ''}}" placeholder="搜索成员" type="text" class="form-control" />
         <span class="input-group-btn">
             <button class="btn btn-default" type="submit"><i class="ico-search"></i></button>
         </span>
@@ -78,7 +78,18 @@
             <div class="table-responsive">
                 <table class="table">
                     <thead>
-
+                        <tr>
+                            <th width="25%">
+                               {!!Html::sortable_link('姓名', $sort_by, 'full_name', $sort_order, ['q' => $q , 'page' => $members->currentPage()])!!}
+                            </th>
+                            <th width="25%">
+                               {!!Html::sortable_link('Email', $sort_by, 'email', $sort_order, ['q' => $q , 'page' => $members->currentPage()])!!}
+                            </th>
+                            <th width="20%">
+                               {!!Html::sortable_link('加入时间', $sort_by, 'created_at', $sort_order, ['q' => $q , 'page' => $members->currentPage()])!!}
+                            </th>
+                            <th></th>
+                        </tr>
                     </thead>
                     <tbody>
                         @foreach($members as $member)
@@ -90,7 +101,7 @@
                                     > {{$member->email}}</a>
                             </td>
                             <td>
-
+                                {{{$member->created_at}}}
                             </td>
                             <td>
                                 <a href="javascript:void(0);" data-modal-id="view-order-" data-href="" title="View Order #" class="loadModal">
@@ -124,7 +135,7 @@
                                 <a
                                     data-modal-id="EditAttendee"
                                     href="javascript:void(0);"
-                                    data-href="#"
+                                    data-href="{{route('showEditMember', ['organiser_id'=>$organiser->id, 'member_id'=>$member->id])}}"
                                     class="loadModal btn btn-xs btn-primary"
                                     > 编辑</a>
 

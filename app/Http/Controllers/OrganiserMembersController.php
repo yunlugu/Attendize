@@ -29,6 +29,7 @@ use Validator;
 use Config;
 use Log;
 use Hash;
+use JavaScript;
 
 class OrganiserMembersController extends MyBaseController
 {
@@ -41,10 +42,10 @@ class OrganiserMembersController extends MyBaseController
      */
     public function showMembers(Request $request, $organiser_id)
     {
-        $allowed_sorts = ['full_name', 'email'];
+        $allowed_sorts = ['full_name', 'email', 'created_at'];
 
         $searchQuery = $request->get('q');
-        // $sort_order = $request->get('sort_order') == 'asc' ? 'asc' : 'desc';
+        $sort_order = $request->get('sort_order') == 'asc' ? 'asc' : 'desc';
         $sort_by = (in_array($request->get('sort_by'), $allowed_sorts) ? $request->get('sort_by') : 'created_at');
 
         $organiser = Organiser::findOrfail($organiser_id);
@@ -52,30 +53,30 @@ class OrganiserMembersController extends MyBaseController
         // $event = Event::scope()->find($event_id);
 
         if ($searchQuery) {
-            $attendees = $event->attendees()
-                ->withoutCancelled()
-                ->join('orders', 'orders.id', '=', 'attendees.order_id')
+            $members = $organiser->members()
                 ->where(function ($query) use ($searchQuery) {
-                    $query->where('orders.order_reference', 'like', $searchQuery . '%')
-                        ->orWhere('attendees.first_name', 'like', $searchQuery . '%')
-                        ->orWhere('attendees.email', 'like', $searchQuery . '%')
-                        ->orWhere('attendees.last_name', 'like', $searchQuery . '%');
+                    $query->Where('members.full_name', 'like', $searchQuery . '%')
+                        ->orWhere('members.email', 'like', $searchQuery . '%');
                 })
-                ->orderBy(($sort_by == 'order_reference' ? 'orders.' : 'attendees.') . $sort_by, $sort_order)
-                ->select('attendees.*', 'orders.order_reference')
+                ->orderBy('members.' . $sort_by, $sort_order)
+                ->select('*')
                 ->paginate();
         } else {
             // 由于 Eloquent 提供“动态属性”，我们可以像访问模型的属性一样访问members()关联方法：
-            $members = $organiser->members;
+            $members = $organiser->members()
+                ->orderBy('members.' . $sort_by, $sort_order)
+                ->select('*')
+                ->paginate();
         }
 
         $data = [
             'members'  => $members,
             'organiser'  => $organiser,
-            'sort_by'    => '',
-            'sort_order' => '',
+            'sort_by'    => $sort_by,
+            'sort_order' => $sort_order,
             'q'          => $searchQuery ? $searchQuery : '',
         ];
+
 
         return view('ManageOrganiser.Members', $data);
     }
@@ -570,17 +571,21 @@ class OrganiserMembersController extends MyBaseController
      * @param $attendee_id
      * @return View
      */
-    public function showEditAttendee(Request $request, $event_id, $attendee_id)
+    public function showEditMember(Request $request, $organiser_id, $member_id)
     {
-        $attendee = Attendee::scope()->findOrFail($attendee_id);
+        $member = Member::findOrFail($member_id);
 
         $data = [
-            'attendee' => $attendee,
-            'event'    => $attendee->event,
-            'tickets'  => $attendee->event->tickets->lists('title', 'id'),
+            'member' => $member,
+            'organiser'    => $member->organiser,
+            // 'departments' => $member->organiser->
         ];
+        JavaScript::put([
+            'fetchDepartmentsRoute' => route('fetchDepartments', ['organiser_id' => 1]),
+            'fetchGroupsRoute' => route('fetchGroups'),
+        ]);
 
-        return view('ManageEvent.Modals.EditAttendee', $data);
+        return view('ManageOrganiser.Modals.EditMember', $data);
     }
 
     /**
@@ -591,11 +596,11 @@ class OrganiserMembersController extends MyBaseController
      * @param $attendee_id
      * @return mixed
      */
-    public function postEditAttendee(Request $request, $event_id, $attendee_id)
+    public function postEditMember(Request $request, $organiser_id, $member_id)
     {
         $rules = [
-            'first_name' => 'required',
-            'ticket_id'  => 'required|exists:tickets,id,account_id,' . Auth::user()->account_id,
+            'full_name' => 'required',
+            // 'ticket_id'  => 'required|exists:tickets,id,account_id,' . Auth::user()->account_id,
             'email'      => 'required|email',
         ];
 
@@ -613,14 +618,14 @@ class OrganiserMembersController extends MyBaseController
             ]);
         }
 
-        $attendee = Attendee::scope()->findOrFail($attendee_id);
-        $attendee->update($request->all());
+        $member = Member::findOrFail($member_id);
+        $member->update($request->all());
 
-        session()->flash('message', 'Successfully Updated Attendee');
+        session()->flash('message', '用户信息已更新！');
 
         return response()->json([
             'status'      => 'success',
-            'id'          => $attendee->id,
+            'id'          => $member->id,
             'redirectUrl' => '',
         ]);
     }

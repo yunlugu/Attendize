@@ -708,7 +708,7 @@ class EventAttendeesController extends MyBaseController
             });
         }
 
-        session()->flash('message', 'Successfully Cancelled Attenddee');
+        session()->flash('message', '成功取消该条记录！');
 
         return response()->json([
             'status'      => 'success',

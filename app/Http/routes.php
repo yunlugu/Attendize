@@ -516,6 +516,14 @@ Route::group(['middleware' => ['auth', 'first.run']], function () {
             'as'   => 'postDeleteMember',
             'uses' => 'OrganiserMembersController@postDeleteMember',
         ]);
+        Route::get('{organiser_id}/members/{member_id}/edit', [
+            'as'   => 'showEditMember',
+            'uses' => 'OrganiserMembersController@showEditMember',
+        ]);
+        Route::post('{organiser_id}/members/{member_id}/edit', [
+            'as'   => 'postEditMember',
+            'uses' => 'OrganiserMembersController@postEditMember',
+        ]);
 
         /*
          * -------
