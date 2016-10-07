@@ -72,6 +72,31 @@ class Event extends MyBaseModel
     }
 
     /**
+     * The organizer associated with the event.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function organiser()
+    {
+        return $this->belongsTo('\App\Models\Organiser');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo('\App\Models\Department');
+    }
+
+    /**
+     * The account associated with the event.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function account()
+    {
+        return $this->belongsTo('\App\Models\Account');
+    }
+
+    /**
      * The images associated with the event.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -132,16 +157,6 @@ class Event extends MyBaseModel
     }
 
     /**
-     * The account associated with the event.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function account()
-    {
-        return $this->belongsTo('\App\Models\Account');
-    }
-
-    /**
      * The currency associated with the event.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -149,16 +164,6 @@ class Event extends MyBaseModel
     public function currency()
     {
         return $this->belongsTo('\App\Models\Currency');
-    }
-
-    /**
-     * The organizer associated with the event.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function organiser()
-    {
-        return $this->belongsTo('\App\Models\Organiser');
     }
 
     /**

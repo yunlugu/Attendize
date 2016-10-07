@@ -28,22 +28,22 @@
                                 </div>
                             </div>
                             <div class="col-sm-3">
-                                <div class="form-group">
-                                    {!! Form::label('apartment', '部门', array('class'=>'control-label required')) !!}
-                                    {!!Form::select('apartment', [
-                                        '技术部' => '技术部',
-                                        '行政部' => '行政部',
-                                        '运营部' => '运营部',
-                                        '宣传部' => '宣传部',
-                                        '外媒部' => '外媒部'
-                                        ], null, ['class' => 'form-control'])!!}
+                                <div class="form-group {{ ($errors->has('last_name')) ? 'has-error' : '' }}">
+                                    {!! Form::label('department', '部门', ['class' => 'control-label']) !!}
+                                    <select name="department" class="form-control" @click="fetchGroups">
+                                        @foreach ($organiser->departments as $department)
+                                        <option value="{{$department->id}}">
+                                            {{ $department->department_name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <!-- <div class="col-sm-3">
                                 <div class="form-group">
                                     {!! Form::label('title', '小组', array('class'=>'control-label required')) !!}
                                     这里准备改ajax
-                                    {!!Form::select('apartment', [
+                                    {!!Form::select('department', [
                                         '1' => '技术部',
                                         '2' => '行政部',
                                         '3' => '运营部',
@@ -62,8 +62,8 @@
                                     <script src="{{url('plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')}}"></script>
                                     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
                                     {!! Form::label('tags', '标签', array('class'=>'control-label required')) !!}
-                                    <input id="tagsinput" type="text" value="{{Input::old('tags')}}" class="form-control" data-role="tagsinput">
-                                    <!-- {!!  Form::text('tags', Input::old('tags'),array('class'=>'form-control','data-role'=>'tagsinput' ))  !!} -->
+                                    <!-- <input id="tagsinput" type="text" value="{{Input::old('tags')}}" class="form-control" data-role="tagsinput"> -->
+                                    {!!  Form::text('tags', Input::old('tags'),array('id'=>"tagsinput",'class'=>'form-control','data-role'=>'tagsinput' ))  !!}
                                     {!!  Form::hidden('tags', Input::old('tags'))  !!}
                                     <script type="text/javascript">
                                         $(function(){
@@ -162,14 +162,14 @@
                                 {!! Form::label('location_venue_name', trans('ManageOrganiser/Modals/CreateEvent.venue_name'), array('class'=>'control-label required ')) !!}
                                 {!!  Form::text('location_venue_name', Input::old('location_venue_name'), [
                                         'class'=>'form-control location_field',
-                                        'placeholder'=>'E.g: The Crab Shack'
+                                        'placeholder'=>'E.g: 立言厅'
                                         ])  !!}
                             </div>
                             <div class="form-group">
                                 {!! Form::label('location_address_line_1', '地点详情', array('class'=>'control-label')) !!}
                                 {!!  Form::text('location_address_line_1', Input::old('location_address_line_1'), [
                                         'class'=>'form-control location_field',
-                                        'placeholder'=>'E.g: 45 Grafton St.'
+                                        'placeholder'=>'E.g: 本部三五食堂三楼'
                                         ])  !!}
                             </div>
                         </div>
@@ -183,8 +183,8 @@
                             </a>
                         </span>
 
-                        @if($organiser_id)
-                            {!! Form::hidden('organiser_id', $organiser_id) !!}
+                        @if($organiser->id)
+                            {!! Form::hidden('organiser_id', $organiser->id) !!}
                         @else
                             <div class="create_organiser" style="{{$organisers->isEmpty() ? '' : 'display:none;'}}">
                                 <h5>

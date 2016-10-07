@@ -22,10 +22,10 @@ class EventController extends MyBaseController
      */
     public function showCreateEvent(Request $request)
     {
+        $organiser = Organiser::scope()->find($request->get('organiser_id'));
         $data = [
             'modal_id'     => $request->get('modal_id'),
-            'organisers'   => Organiser::scope()->lists('name', 'id'),
-            'organiser_id' => $request->get('organiser_id') ? $request->get('organiser_id') : false,
+            'organiser'   => $organiser,
         ];
 
         return view('ManageOrganiser.Modals.CreateEvent', $data);
@@ -50,7 +50,7 @@ class EventController extends MyBaseController
 
         $event->title = $request->get('title');
         $event->speaker = $request->get('speaker');
-        $event->apartment = $request->get('apartment');
+        $event->department = $request->get('department');
         $event->tags = $request->get('tags');
         $event->description = strip_tags($request->get('description'));
         $event->start_date = $request->get('start_date') ? Carbon::createFromFormat('d-m-Y H:i',
@@ -229,7 +229,7 @@ class EventController extends MyBaseController
         $event->is_live = $request->get('is_live');
         $event->title = $request->get('title');
         $event->speaker = $request->get('speaker');
-        $event->apartment = $request->get('apartment');
+        $event->department = $request->get('department');
         $event->tags = $request->get('tags');
         $event->description = strip_tags($request->get('description'));
         $event->start_date = $request->get('start_date') ? Carbon::createFromFormat('d-m-Y H:i',

@@ -15,7 +15,7 @@
                 </a>
             </li>
             <li class="event-organiser">
-                By <a href='{{route('showOrganiserDashboard', ['organiser_id' => $event->organiser->id])}}'>{{{$event->organiser->name}}}</a>
+                By <a href='{{route('showOrganiserDashboard', ['organiser_id' => $event->organiser->id])}}'>{{{$event->department->department_name}}}</a>
             </li>
         </ul>
 
@@ -25,15 +25,15 @@
         <ul class="nav nav-section nav-justified mt5 mb5">
             <li>
                 <div class="section">
-                    <h4 class="nm">{{$event->tickets->sum('quantity_sold')}}</h4>
-                    <p class="nm text-muted">{{trans('ManageOrganiser/Partials/EventPanel.tickets_sold')}}</p>
+                    <h4 class="nm">{{$event->attendees->count()}}</h4>
+                    <p class="nm text-muted">报名</p>
                 </div>
             </li>
 
             <li>
                 <div class="section">
-                    <h4 class="nm">{{{money($event->sales_volume + $event->organiser_fees_volume, $event->currency)}}}</h4>
-                    <p class="nm text-muted">{{trans('ManageOrganiser/Partials/EventPanel.revenue')}}</p>
+                    <h4 class="nm">{{$event->attendees->where('has_arrived', 1)->count()}}</h4>
+                    <p class="nm text-muted">签到</p>
                 </div>
             </li>
         </ul>

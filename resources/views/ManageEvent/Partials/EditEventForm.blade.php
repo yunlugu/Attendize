@@ -52,15 +52,20 @@
             </div>
 
             <div class="col-sm-3">
-                <div class="form-group">
-                    {!! Form::label('apartment', '部门', array('class'=>'control-label required')) !!}
-                    {!!Form::select('apartment', [
-                        '技术部' => '技术部',
-                        '行政部' => '行政部',
-                        '运营部' => '运营部',
-                        '宣传部' => '宣传部',
-                        '外媒部' => '外媒部'
-                        ], null, ['class' => 'form-control'])!!}
+                <div class="form-group {{ ($errors->has('last_name')) ? 'has-error' : '' }}">
+                    {!! Form::label('department', '部门', ['class' => 'control-label']) !!}
+                    <select name="department" class="form-control" @click="fetchGroups">
+                        <option value="{{$event->department->id}}">
+                            {{$event->department->department_name}}
+                        </option>
+                        @foreach ($event->organiser->departments as $department)
+                        @if ($department->id != $event->department->id)
+                        <option value="{{$department->id}}">
+                            {{ $department->department_name }}
+                        </option>
+                        @endif
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="col-sm-3">
@@ -90,7 +95,7 @@
             {!!  Form::text('venue_name_full', Input::old('venue_name_full'),
                                         array(
                                         'class'=>'form-control geocomplete location_field',
-                                        'placeholder'=>'E.g: The Crab Shack'
+                                        'placeholder'=>'E.g: 立言厅'
                                         ))  !!}
 
             <!--These are populated with the Google places info-->
@@ -123,17 +128,10 @@
                             ])  !!}
             </div>
             <div class="form-group">
-                {!! Form::label('location_address_line_1', 'Address Line 1', array('class'=>'control-label')) !!}
+                {!! Form::label('location_address_line_1', '地点详情', array('class'=>'control-label')) !!}
                 {!!  Form::text('location_address_line_1', $event->location_address_line_1, [
                                         'class'=>'form-control location_field',
                                         'placeholder'=>'E.g: 本部三五食堂三楼'
-                            ])  !!}
-            </div>
-            <div class="form-group">
-                {!! Form::label('location_address_line_2', 'Address Line 2', array('class'=>'control-label')) !!}
-                {!!  Form::text('location_address_line_2', $event->location_address_line_2, [
-                                        'class'=>'form-control location_field',
-                                        'placeholder'=>'E.g: 中南大学bulabula.'
                             ])  !!}
             </div>
         </div>

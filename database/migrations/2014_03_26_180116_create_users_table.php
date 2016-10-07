@@ -167,7 +167,7 @@ class CreateUsersTable extends Migration
             $t->increments('id');
 
             $t->string('title');
-            $t->string('apartment');
+            $t->string('department');
             $t->string('tags', 100)->default('code');
             $t->string('location')->nullable();
             $t->string('bg_type', 15)->default('color');
