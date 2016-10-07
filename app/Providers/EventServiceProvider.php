@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\OrderCompletedEvent' => [
             'App\Listeners\OrderCompletedListener',
         ],
+        'App\Events\CheckinEvent' => [
+            'App\Listeners\CheckinListener',
+        ],
     ];
 
     /**

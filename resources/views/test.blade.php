@@ -1,3 +1,1 @@
-@foreach($members as $member)
-{{$member->email}}
-@endforeach
+{{var_dump($data)}}

@@ -136,10 +136,17 @@ Route::group(['prefix' => 'e'], function () {
         'uses' => 'EventViewController@showCalendarIcs',
     ]);
 
+    Route::get('/{event_id}/checkin', [
+        'as'   => 'showEventCheckin',
+        'uses' => 'EventViewController@showEventCheckin',
+    ]);
+
     Route::get('/{event_id}/{event_slug?}', [
         'as'   => 'showEventPage',
         'uses' => 'EventViewController@showEventHome',
     ]);
+
+
 
     Route::post('/{event_id}/contact_organiser', [
         'as'   => 'postContactOrganiser',

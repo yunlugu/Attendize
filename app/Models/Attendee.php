@@ -29,6 +29,7 @@ class Attendee extends MyBaseModel
         'event_id',
         'order_id',
         'member_id',
+        'full_name',
         'ticket_id',
         'account_id',
         'reference',
@@ -111,16 +112,6 @@ class Attendee extends MyBaseModel
      */
     public function getReferenceAttribute() {
         return $this->order->order_reference . '-' . $this->reference_index;
-    }
-
-    /**
-     * Get the full name of the attendee.
-     *
-     * @return string
-     */
-    public function getFullNameAttribute()
-    {
-        return $this->first_name.' '.$this->last_name;
     }
 
 

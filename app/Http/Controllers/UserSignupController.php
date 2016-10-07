@@ -119,10 +119,9 @@ class UserSignupController extends Controller
     }
 
     public function test(){
-        Mail::send('Emails.ConfirmEmail', ['first_name' => 'wu', 'confirmation_code' => '123'], function ($message) {
-            $message->to('664032667@qq.com', 'wu')
-                ->subject('Thank you for registering for Attendize');
-        });
+        event(new \App\Events\CheckinEvent(3));
+        $data['data'] = 'hello world';
+        return view('test', $data);
     }
 
     public function fetchDepartments($organiser_id) {

@@ -68,6 +68,22 @@ class EventViewController extends Controller
         return view('Public.ViewEvent.EventPage', $data);
     }
 
+    public function showEventCheckin(Request $request, $event_id)
+    {
+        $event = Event::findOrFail($event_id);
+
+        if (!Utils::userOwns($event) && !$event->is_live) {
+            return view('Public.ViewEvent.EventNotLivePage');
+        }
+
+        $data = [
+            'event'       => $event,
+            'is_embedded' => 0,
+        ];
+
+        return view('Public.ViewEvent.EventCheckinPage', $data);
+    }
+
     /**
      * Show preview of event homepage / used for backend previewing
      *
