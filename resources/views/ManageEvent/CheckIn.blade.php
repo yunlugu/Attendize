@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>
-        Check In: {{$event->title}}
+        签到: {{$event->title}}
     </title>
 
     {!! HTML::script('vendor/vue/dist/vue.min.js') !!}
@@ -49,7 +49,7 @@
                             'v-model' => 'searchTerm',
                             '@keyup' => 'fetchAttendees | debounce 500',
                             '@keyup.esc' => 'clearSearch',
-                            'placeholder' => 'Search by Attendee Name, Order Reference, Attendee Reference... '
+                            'placeholder' => '搜索与会者。。。 '
                 ])  !!}
 
 
@@ -70,7 +70,7 @@
                 <div class="attendee_list">
                     <h4 class="attendees_title">
                         <span v-if="!searchTerm">
-                            All Attendees
+                            当前已签到
                         </span>
                         <span v-else v-cloak>
                             @{{searchResultsCount}} @{{searchResultsCount | pluralize 'Result'}}
@@ -90,11 +90,11 @@
                         class="at list-group-item"
                         :class = "{arrived : attendee.has_arrived}"
                         >
-                        Name: <b>@{{ attendee.first_name }} @{{ attendee.last_name }} </b> &nbsp; <span v-if="!attendee.is_payment_received" class="label label-danger">Awaiting Payment</span>
+                        姓名: <b>@{{ attendee.full_name }} </b> &nbsp;
                         <br>
-                        Reference: <b>@{{ attendee.order_reference + '-' + attendee.reference_index }}</b>
+                        Email: <b>@{{ attendee.email }} </b> &nbsp;
                         <br>
-                        Ticket: <b>@{{ attendee.ticket }}</b>
+                        Tel: <b>@{{ attendee.phone }} </b> &nbsp;
                         <a href="" class="ci btn btn-successfulQrRead">
                             <i class="ico-checkmark"></i>
                         </a>
@@ -127,7 +127,7 @@
 
         <div class="scannerButtons">
                     <a @click="initScanner" v-show="!isScanning" href="javascript:void(0);">
-                    Scan another ticket
+                    继续扫描
                     </a>
         </div>
         <div v-if="isScanning" class="scannerAimer">
@@ -143,7 +143,7 @@
                         @{{{ scanResultMessage }}}
                     </span>
                     <span v-else>
-                        <div id="scanning-ellipsis">Scanning<span>.</span><span>.</span><span>.</span></div>
+                        <div id="scanning-ellipsis">扫描中<span>.</span><span>.</span><span>.</span></div>
                     </span>
         </div>
         <canvas id="QrCanvas" width="800" height="600"></canvas>
