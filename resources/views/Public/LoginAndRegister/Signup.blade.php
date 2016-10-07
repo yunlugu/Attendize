@@ -10,9 +10,9 @@ Sign Up
             {!! Form::open(array('url' => 'signup', 'class' => 'panel')) !!}
             <div class="panel-body">
                 <div class="logo">
-                   {!! HTML::image('assets/images/logo-dark.png') !!}
+                   {!! HTML::image('assets/images/logo.png') !!}
                 </div>
-                <h2>Sign up</h2>
+                <h2>注册</h2>
 
                 @if(Input::get('first_run'))
                     <div class="alert alert-info">
@@ -66,14 +66,14 @@ Sign Up
                     </div>
                 </div>
                 <div class="form-group {{ ($errors->has('password')) ? 'has-error' : '' }}">
-                    {!! Form::label('password', 'Password', ['class' => 'control-label required']) !!}
+                    {!! Form::label('password', '密码', ['class' => 'control-label required']) !!}
                     {!! Form::password('password',  ['class' => 'form-control']) !!}
                     @if($errors->has('password'))
                         <p class="help-block">{{ $errors->first('password') }}</p>
                     @endif
                 </div>
                 <div class="form-group {{ ($errors->has('password_confirmation')) ? 'has-error' : '' }}">
-                    {!! Form::label('password_confirmation', 'Password again', ['class' => 'control-label required']) !!}
+                    {!! Form::label('password_confirmation', '确认密码', ['class' => 'control-label required']) !!}
                     {!! Form::password('password_confirmation',  ['class' => 'form-control']) !!}
                     @if($errors->has('password_confirmation'))
                         <p class="help-block">{{ $errors->first('password_confirmation') }}</p>
@@ -93,12 +93,12 @@ Sign Up
                 @endif
 
                 <div class="form-group ">
-                   {!! Form::submit('Sign Up', array('class'=>"btn btn-block btn-success")) !!}
+                   {!! Form::submit('注册', array('class'=>"btn btn-block btn-success")) !!}
                 </div>
 
                 @if($is_attendize)
                     <div class="signup">
-                        <span>Already have account? <a class="semibold" href="/login">Sign In</a></span>
+                        <span>已有账户？ <a class="semibold" href="/login">登录</a></span>
                     </div>
                 @endif
             </div>
