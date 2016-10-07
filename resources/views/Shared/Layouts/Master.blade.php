@@ -12,7 +12,7 @@
     -->
     <title>
         @section('title')
-            Attendize ::
+            云麓谷 ::
         @show
     </title>
 

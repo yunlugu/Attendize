@@ -4,24 +4,50 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="form-group">
-            {!! Form::label('is_live', 'Event Visibility', array('class'=>'control-label required')) !!}
-            {!!  Form::select('is_live', [
-            '1' => 'Make event visible to the public.',
-            '0' => 'Hide event from the public.'],null,
-                                        array(
-                                        'class'=>'form-control'
-                                        ))  !!}
-        </div>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-9">
                 <div class="form-group">
-                    {!! Form::label('title', 'Event Title', array('class'=>'control-label required')) !!}
+                    {!! Form::label('title', '培训主题', array('class'=>'control-label required')) !!}
                     {!!  Form::text('title', Input::old('title'),
                                                 array(
                                                 'class'=>'form-control',
                                                 'placeholder'=>''
                                                 ))  !!}
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group">
+                    {!! Form::label('is_live', '开放设置', array('class'=>'control-label required')) !!}
+                    {!!  Form::select('is_live', [
+                    '1' => '向全体开放培训',
+                    '0' => '不对公众开发'],null,
+                                                array(
+                                                'class'=>'form-control'
+                                                ))  !!}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <link rel="stylesheet" href="{{url('plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css')}}" />
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+                    <script src="{{url('plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')}}"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                    {!! Form::label('tags', '标签', array('class'=>'control-label required')) !!}
+                    <!-- <input id="tagsinput" type="text" value="{{Input::old('tags')}}" class="form-control" data-role="tagsinput"> -->
+                    {!!  Form::text('tagsinput', Input::old('tags'),array('id'=>'tagsinput', 'class'=>'form-control','data-role'=>'tagsinput'))  !!}
+                    {!!  Form::hidden('tags', Input::old('tags'))  !!}
+                    <script type="text/javascript">
+                        $(function(){
+                            $("#tagsinput").tagsinput('add', $('#tags').val());
+                            $("#tagsinput").change(function(){
+                                $('#tags').val($(this).val());
+                            });
+                        })
+
+                    </script>
                 </div>
             </div>
 
@@ -51,7 +77,7 @@
 
 
         <div class="form-group">
-           {!! Form::label('description', 'Event Description', array('class'=>'control-label')) !!}
+           {!! Form::label('description', '简介', array('class'=>'control-label')) !!}
             {!!  Form::textarea('description', Input::old('description'),
                                         array(
                                         'class'=>'form-control editable',
@@ -60,7 +86,7 @@
         </div>
 
         <div class="form-group address-automatic" style="display:{{$event->location_is_manual ? 'none' : 'block'}};">
-            {!! Form::label('name', 'Venue Name', array('class'=>'control-label required ')) !!}
+            {!! Form::label('name', '培训地点', array('class'=>'control-label required ')) !!}
             {!!  Form::text('venue_name_full', Input::old('venue_name_full'),
                                         array(
                                         'class'=>'form-control geocomplete location_field',
@@ -90,59 +116,38 @@
 
         <div class="address-manual" style="display:{{$event->location_is_manual ? 'block' : 'none'}};">
             <div class="form-group">
-                {!! Form::label('location_venue_name', 'Venue Name', array('class'=>'control-label required ')) !!}
+                {!! Form::label('location_venue_name', '会场名称', array('class'=>'control-label required ')) !!}
                 {!!  Form::text('location_venue_name', $event->venue_name, [
                                         'class'=>'form-control location_field',
-                                        'placeholder'=>'E.g: The Crab Shack'
+                                        'placeholder'=>'E.g: 立言厅'
                             ])  !!}
             </div>
             <div class="form-group">
                 {!! Form::label('location_address_line_1', 'Address Line 1', array('class'=>'control-label')) !!}
                 {!!  Form::text('location_address_line_1', $event->location_address_line_1, [
                                         'class'=>'form-control location_field',
-                                        'placeholder'=>'E.g: 45 Grafton St.'
+                                        'placeholder'=>'E.g: 本部三五食堂三楼'
                             ])  !!}
             </div>
             <div class="form-group">
                 {!! Form::label('location_address_line_2', 'Address Line 2', array('class'=>'control-label')) !!}
                 {!!  Form::text('location_address_line_2', $event->location_address_line_2, [
                                         'class'=>'form-control location_field',
-                                        'placeholder'=>'E.g: Dublin.'
+                                        'placeholder'=>'E.g: 中南大学bulabula.'
                             ])  !!}
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        {!! Form::label('location_state', 'City', array('class'=>'control-label')) !!}
-                        {!!  Form::text('location_state', $event->location_state, [
-                                        'class'=>'form-control location_field',
-                                        'placeholder'=>'E.g: Dublin.'
-                            ])  !!}
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        {!! Form::label('location_post_code', 'Post Code', array('class'=>'control-label')) !!}
-                        {!!  Form::text('location_post_code', $event->location_post_code, [
-                                        'class'=>'form-control location_field',
-                                        'placeholder'=>'E.g: 94568.'
-                            ])  !!}
-                    </div>
-                </div>
             </div>
         </div>
 
         <div class="clearfix" style="margin-top:-10px; padding: 5px; padding-top: 0px;">
             <span class="pull-right">
-                or <a data-clear-field=".location_field" data-toggle-class=".address-automatic, .address-manual" data-show-less-text="{{$event->location_is_manual ? 'Enter Address Manually' : 'Select From Existing Venues'}}" href="javascript:void(0);" class="show-more-options clear_location">{{$event->location_is_manual ? 'Select From Existing Venues' : 'Enter Address Manually'}}</a>
+                or <a data-clear-field=".location_field" data-toggle-class=".address-automatic, .address-manual" data-show-less-text="{{$event->location_is_manual ? 'Enter Address Manually' : 'Select From Existing Venues'}}" href="javascript:void(0);" class="show-more-options clear_location">{{$event->location_is_manual ? '选择已有地点' : '手动输入地址'}}</a>
             </span>
         </div>
 
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    {!! Form::label('start_date', 'Event Start Date', array('class'=>'required control-label')) !!}
+                    {!! Form::label('start_date', '培训开始日期', array('class'=>'required control-label')) !!}
                     {!!  Form::text('start_date', $event->getFormattedDate('start_date'),
                                                         [
                                                     'class'=>'form-control start hasDatepicker ',
@@ -157,7 +162,7 @@
 
             <div class="col-sm-6 ">
                 <div class="form-group">
-                    {!!  Form::label('end_date', 'Event End Date',
+                    {!!  Form::label('end_date', '培训结束日期',
                                         [
                                     'class'=>'required control-label '
                                 ])  !!}
@@ -176,14 +181,14 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                   {!! Form::label('event_image', 'Event Flyer', array('class'=>'control-label ')) !!}
+                   {!! Form::label('event_image', '图片', array('class'=>'control-label ')) !!}
                    {!! Form::styledFile('event_image', 1) !!}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="float-l">
                     @if($event->images->count())
-                    {!! Form::label('', 'Current Event Flyer', array('class'=>'control-label ')) !!}
+                    {!! Form::label('', '当前图片', array('class'=>'control-label ')) !!}
                     <div class="form-group">
                         <div class="well well-sm well-small">
                            {!! Form::label('remove_current_image', 'Delete?', array('class'=>'control-label ')) !!}
@@ -203,7 +208,7 @@
     <div class="col-md-12">
         <div class="panel-footer mt15 text-right">
            {!! Form::hidden('organiser_id', $event->organiser_id) !!}
-           {!! Form::submit('Save Changes', ['class'=>"btn btn-success"]) !!}
+           {!! Form::submit('保存更改', ['class'=>"btn btn-success"]) !!}
         </div>
     </div>
     {!! Form::close() !!}
