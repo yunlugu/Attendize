@@ -18,13 +18,18 @@
 
         <!--Style-->
        {!!HTML::style('assets/stylesheet/application.css')!!}
+       <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <!--/Style-->
 
         <style>
 
             body {
-                background: url({{asset('assets/images/background.png')}}) repeat;
+                background: url({{asset('assets/images/background2.png')}}) no-repeat center center fixed;
                 background-color: #2E3254;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
             }
 
             h2 {

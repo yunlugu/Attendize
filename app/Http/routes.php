@@ -752,9 +752,14 @@ Route::group(['middleware' => ['auth', 'first.run']], function () {
     });
 });
 
-Route::get('/', function () {
-    return Redirect::route('showSelectOrganiser');
-});
+Route::get('/', [
+    'as'   => 'showMainPage',
+    'uses' => 'PublicViewController@showMainPage',
+]);
+Route::get('danmaku', [
+    'as'   => 'showDanmakuPage',
+    'uses' => 'PublicViewController@showDanmakuPage',
+]);
 
 Route::get('/terms_and_conditions', [
     'as' => 'termsAndConditions',

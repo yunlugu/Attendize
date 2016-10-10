@@ -56,7 +56,8 @@ class UserSignupController extends Controller
         $is_attendize = Utils::isAttendize();
 
         $this->validate($request, [
-            'email'        => 'required|email|unique:users',
+            'email'        => 'required|email|unique:members',
+            'phone'        => 'required|unique:members',
             'password'     => 'required|min:5|confirmed',
             'full_name'   => 'required',
             // 'terms_agreed' => $is_attendize ? 'required' : '',
@@ -71,6 +72,7 @@ class UserSignupController extends Controller
 
         $member = new Member();
         $member_data = $request->only(['email', 'full_name']);
+        $member_data['phone'] = $request->get('phone');
         $member_data['password'] = Hash::make($request->get('password'));
         $member_data['account_id'] = $account->id;
         $member_data['organiser_id'] = $organiser->id;
@@ -83,14 +85,14 @@ class UserSignupController extends Controller
         if (1) {
             // TODO: Do this async?
             Mail::send('Emails.ConfirmEmail', ['api_token' => $member->api_token, 'full_name' => $member->full_name, 'confirmation_code' => $member->confirmation_code, 'email_logo' => $organiser->logo_path], function ($message) use ($request) {
-                $message->to($request->get('email'), $request->get('first_name'))
+                $message->to($request->get('email'), $request->get('full_name'))
                     ->subject('欢迎加入云麓谷大家庭');
             });
         }
 
-        session()->flash('message', '注册成功！请登录');
+        session()->flash('message', '注册成功！记着确认邮件哦！');
 
-        return redirect('login');
+        return redirect()->route('showDanmakuPage');
     }
 
     /**
@@ -105,7 +107,7 @@ class UserSignupController extends Controller
 
         if (!$member) {
             return view('Public.Errors.Generic', [
-                'message' => 'The confirmation code is missing or malformed.',
+                'message' => '验证码无效，请确认邮件后重试',
             ]);
         }
 
@@ -113,7 +115,7 @@ class UserSignupController extends Controller
         $member->confirmation_code = null;
         $member->save();
 
-        session()->flash('message', 'Success! Your email is now verified. You can now login.');
+        session()->flash('message', '邮箱验证成功～');
 
         return redirect()->route('login');
     }

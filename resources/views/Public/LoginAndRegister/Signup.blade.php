@@ -7,7 +7,7 @@ Sign Up
 @section('content')
     <div id="app" class="row">
         <div class="col-md-7 col-md-offset-2">
-            {!! Form::open(array('url' => 'signup', 'class' => 'panel')) !!}
+            {!! Form::open(array('url' => 'signup', 'class' => 'panel', 'role' => 'panel')) !!}
             <div class="panel-body">
                 <div class="logo">
                    {!! HTML::image('assets/images/logo.png') !!}
@@ -35,6 +35,13 @@ Sign Up
                     {!! Form::text('email', null, ['class' => 'form-control']) !!}
                     @if($errors->has('email'))
                         <p class="help-block">{{ $errors->first('email') }}</p>
+                    @endif
+                </div>
+                <div class="form-group {{ ($errors->has('phone')) ? 'has-error' : '' }}">
+                    {!! Form::label('phone', '电话', ['class' => 'control-label']) !!}
+                    {!! Form::text('phone', null, ['class' => 'form-control']) !!}
+                    @if($errors->has('phone'))
+                        <p class="help-block">{{ $errors->first('phone') }}</p>
                     @endif
                 </div>
                 <div class="row">
