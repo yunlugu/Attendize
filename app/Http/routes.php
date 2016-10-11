@@ -760,6 +760,10 @@ Route::get('danmaku', [
     'as'   => 'showDanmakuPage',
     'uses' => 'PublicViewController@showDanmakuPage',
 ]);
+Route::post('danmaku', [
+    'as'   => 'postDanmaku',
+    'uses' => 'PublicViewController@postDanmaku',
+]);
 
 Route::get('/terms_and_conditions', [
     'as' => 'termsAndConditions',
