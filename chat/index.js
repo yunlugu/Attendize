@@ -20,6 +20,9 @@ function handler(req, res) {
 
 io.on('connection', function(socket) {
     console.log('connected');
+    socket.on('chat message', function(msg){
+      console.log('message: ' + msg);
+    });
 });
 
 redis.psubscribe('*', function(err, count) {

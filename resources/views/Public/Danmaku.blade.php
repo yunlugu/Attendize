@@ -9,7 +9,6 @@
     <link rel="stylesheet" type="text/css" href="{{url('plugins/danmaku/dist/css/barrager.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url('plugins/danmaku/static/pick-a-color/css/pick-a-color-1.2.3.min.css')}}">
     <link type="text/css" rel="stylesheet" href="{{url('plugins/danmaku/static/syntaxhighlighter/styles/shCoreDefault.css')}}"/>
-
 @stop
 
 @section('navbar')
@@ -20,23 +19,28 @@
     <div id="content" class="bb-docs-header" tabindex="-1">
         <div class="container text-center">
             <div class="bb-masthead">
-                <h1>云麓蛋？？</h1>
+                <h1>云麓蛋</h1>
                 <p>
-                    到底念tan还是dan
+                    dàn ?? tán ??
                 </p>
             </div>
         </div>
     </div>
     <div class="container">
+        {!! Form::open(array('class' => '')) !!}
         <section class="bb-section">
             <div class="lead-top">
                 <div class="text-center">
-                    <p class="hidden-xs bb-code code-leader">
-                        云麓谷弹幕测试</br>
-                    </p>
-                    <p>
-                        <button  class="bb-trigger btn btn-primary btn-lg  bb-light-blue"  onclick="run_example()"> 弹弹弹</button>
-                    </p>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="发射弹幕">
+                                <span class="input-group-btn">
+                                    <button  class="btn btn-success"> 发射！</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -45,83 +49,33 @@
                 <h2>自定义</h2>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    <form class="form-horizontal">
+                <div class="col-md-6 col-md-offset-3">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" >文字</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" name="info" type="text" placeholder="弹幕文字信息"/>
-                            </div>
+                            <label for="" >速度</label>
+                            <input  class="form-control"  name="speed" type="text" placeholder="10" value="10" />
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" >链接</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" name="href" type="text" placeholder="http://git.yunlugu.org"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" >速度</label>
-                            <div class="col-sm-2">
-                                <input  class="form-control"  name="speed" type="text" placeholder="10" value="10" />
-                            </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <label >高度</label>
+                                    <input id="bottomradio" type="radio" name="bottomradio"   value="0" checked="checked"> 随机
 
-                            <label class="col-sm-2 control-label" >关闭按钮</label>
-                            <div class="col-sm-2">
-                                <input  class="form-control"  name="close" type="checkbox" checked   >
-                            </div>
-
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" >高度</label>
-                            <div class="col-sm-4">
-                                <label class="radio-inline">
-                                  <input type="radio" name="bottomradio"   value="0" checked="checked"> 随机
-                                </label>
-                                <label class="radio-inline">
-                                   <input type="radio" name="bottomradio"   value="1" > 设置
-                                </label>
-                            </div>
-                            <div class="col-sm-2">
-                                <input class="form-control" name="bottom" type="text" placeholder="70"  value="70"   />
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="radio" name="bottomradio" value="1" > 设置
+                                    <input class="form-control" name="bottom" type="text" placeholder="250"  value="250"   />
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" >图片</label>
-                            <div class="col-sm-6">
-                                <label class="radio-inline">
-                                  <input type="radio" name="img"  value="cute.png" checked=""> cute.png
-                                </label>
-                                <label class="radio-inline">
-                                  <input type="radio" name="img"  value="haha.gif"> haha.gif
-                                </label>
-                                <label class="radio-inline">
-                                  <input type="radio" name="img"   value="none">  无图
-                                </label>
-                            </div>
+                            <label for="color" >颜色</label>
+                            <input id="color" type="text" value="fff" name="color" class="pick-a-color form-control">
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" >颜色</label>
-                            <div class="col-sm-6">
-                                <input type="text" value="fff" name="color" class="pick-a-color form-control">
-                            </div>
-                        </div>
-                    </form>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" ></label>
-                            <div class="col-sm-3">
-                                <button  class="btn btn-primary   bb-light-blue"  onclick="run()"> 运行</button>
-                            </div>
-                                                        <div class="col-sm-3">
-                                <button  class="btn btn-warning   "  onclick="clear_barrage()"> 清除</button>
-                            </div>
-                        </div>
-                </div>
-                <div class="col-md-6">
-                        <textarea class="form-control" id="barrager-code" rows="14"  ></textarea>
+                        <!-- <button type="submit" class="btn btn-primary bb-light-blue"> 运行</button> -->
+                        <button  class="btn btn-warning" onclick="clear_barrage()"> 清除</button>
+                    {!! Form::close() !!}
                 </div>
             </div>
-
-
         </section>
     </div>
 
@@ -153,19 +107,6 @@
         }
         return result;
     }
-    var  barrager_code=
-        'var item={\n'+
-        "   img:'{img}', //图片 \n"+
-        "   info:'{info}', //文字 \n"+
-        "   href:'{href}', //链接 \n"+
-        "   close:{close}, //显示关闭按钮 \n"+
-        "   speed:{speed}, //延迟,单位秒,默认6 \n"+
-        "   bottom:{bottom}, //距离底部高度,单位px,默认随机 \n"+
-        "   color:'{color}', //颜色,默认白色 \n"+
-        "   old_ie_color:'{old_ie_color}', //ie低版兼容色,不能与网页背景相同,默认黑色 \n"+
-        " }\n"+
-        "$('body').barrager(item);"
-        ;
 
     $(function() {
 
@@ -173,23 +114,16 @@
         $(".pick-a-color").pickAColor();
 
         var  default_item={
-                'img':'static/heisenberg.png',
-                'info':'弹幕文字信息',
-                'href':'http://www.yaseng.org',
-                'close':true,
-                'speed':6,
-                'bottom':70,
+                'img':Attendize.logo_path,
+                'info':'云麓蛋！！！！！',
+                'href':'http://www.yunlugu.org',
+                'close':false,
+                'speed':10,
+                'bottom':300,
                 'color':'#fff' ,
                 'old_ie_color':'#000000'
             };
-        var item={'img':'static/img/heisenberg.png','href':'http://www.baidu.com','info':'Jquery.barrager.js 专业的网页弹幕插件'};
-        //item1={'href':'http://www.baidu.com','info':'这是一条很长很长的字幕','close':false};
-        $('#barrager-code').val(barrager_code.format(default_item));
-
-
-        $('body').barrager(item);
-
-
+        $('body').barrager(default_item);
 
          //每条弹幕发送间隔
         var looper_time=3*1000;
@@ -203,103 +137,45 @@
                 looper=setInterval(do_barrager,looper_time);
                 run_once=false;
             }
-            //获取
-            $.getJSON('server.php?mode=1',function(data){
-                //是否有数据
-                if(data.info){
-
-                     $('body').barrager(data);
-                }
-
-            });
         }
 
         function barrager(){
 
-
-
         }
-
-
-
-
-
-
-
     });
 
-    function  run(){
-
-        var  info=$('input[name=info]').val();
-        (info == '' ) ?  info='我是大傻子' : info=info;
-        var  href=$('input[name=href]').val();
-        var  speed=parseInt($('input[name=speed]').val());
-        var  bottom=parseInt($('input[name=bottom]').val());
-        var  code=barrager_code;
-        if($('input:radio[name=bottomradio]:checked').val() == 0){
-        var  window_height=$(window).height()-150;
-        bottom=Math.floor(Math.random()*window_height+40);
-        code=code.replace("   bottom:{bottom}, //距离底部高度,单位px,默认随机 \n",'');
-
-        }
-
-        var  img=$('input:radio[name=img]:checked').val();
-
-        if   (img == 'none' ){
-
-            code=code.replace("   img:'{img}', //图片 \n",'');
-        }
-
-
-
-
-        var  item={
-                'img':'static/img/'+img,
-                'info':info,
-                'href':href,
-                'close':true,
-                'speed':speed,
-                'bottom':bottom,
-                'color':'#'+$('input[name=color').val(),
-                'old_ie_color':'#'+$('input[name=color').val()
-
-
-
-                };
-
-         if(!$('input[name=close]').is(':checked')){
-
-
-            item.close=false;
-
-
-        }
-
-
-        code=code.format(item);
-        console.log(code);
-        $('#barrager-code').val(code);
-        eval(code);
-
-
-    }
-
     function  clear_barrage(){
-
         $.fn.barrager.removeAll();
     }
 
-
-
-
-
-    function  run_example(){
-
-    var example_item={'img':'static/img/heisenberg.png','info':'Hello world!'};
-    $('body').barrager(example_item);
-    return false;
-
-    }
-
     </script>
+
+    <script type="text/javascript" src="{{url('js/jquery.serializejson.min.js')}}"></script>
+    <script src="{{url('plugins/socket.io/node_modules/socket.io-client/socket.io.js')}}"></script>
+    <!-- <script src="http://code.jquery.com/jquery-1.11.1.js"></script> -->
+    <script>
+    var socket = io('http://localhost:3000');
+
+    $('form').submit(function(){
+        console.log($(this).serializeJSON())
+    socket.emit('chat message', $(this).serializeJSON());
+    // $('#m').val('');
+    return false;
+    });
+
+    socket.on('chat message', function(danmaku) {
+        var item={
+               img:false, //图片
+               info:danmaku.info, //文字
+               // href:'http://www.yaseng.org', //链接
+               close:false, //显示关闭按钮
+               speed:danmaku.speed, //延迟,单位秒,默认6
+               bottom:danmaku.bottomradio, //距离底部高度,单位px,默认随机
+               color:danmaku.color, //颜色,默认白色
+               old_ie_color:'#000000', //ie低版兼容色,不能与网页背景相同,默认黑色
+          }
+        $('body').barrager(item);
+    })
+
+ </script>
 @stop

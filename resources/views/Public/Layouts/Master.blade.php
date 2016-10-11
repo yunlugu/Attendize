@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>@yield('title')</title>
+    @include('Shared.Layouts.ViewJavascript')
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     {!!HTML::style('assets/stylesheet/application.css')!!}
     <link rel="stylesheet" type="text/css" href="{{url('css/bootstrap.min.css')}}" media="screen" />

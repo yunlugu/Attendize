@@ -19,6 +19,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\CheckinEvent' => [
             'App\Listeners\CheckinListener',
         ],
+        'App\Events\DanmakuEvent' => [
+            'App\Listeners\DanmakuListener',
+        ],
     ];
 
     /**

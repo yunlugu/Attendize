@@ -156,6 +156,7 @@ class EventCheckInController extends MyBaseController
             'status'  => 'success',
             'message' => 'Success !<br>Name: ' . $member->full_name . '<br>email: ' . $attendee->email
         ]);
+
     }
 
     /**
