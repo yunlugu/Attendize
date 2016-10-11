@@ -43,7 +43,7 @@ Route::group(['middleware' => ['installed']], function () {
     /*
      * Login
      */
-    Route::get('/login', [
+    Route::get('admin/login', [
         'as'   => 'login',
         'uses' => 'UserLoginController@showLogin',
     ]);

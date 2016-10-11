@@ -35,7 +35,9 @@
         "symfony/dom-crawler": "~3.0",
         "symfony/css-selector": "~3.0",
         "doctrine/dbal": "~2.3",
-        "barryvdh/laravel-ide-helper": "^2.1"
+        "barryvdh/laravel-ide-helper": "^2.1",
+        "xethron/migrations-generator": "dev-l5",
+        "way/generators": "dev-feature/laravel-five-stable"
     },
 
     "autoload": {
@@ -71,5 +73,11 @@
     },
     "config": {
         "preferred-install": "dist"
+    },
+    "repositories": {
+        "repo-name": {
+            "type": "git",
+            "url": "git@github.com:jamisonvalenta/Laravel-4-Generators.git"
+        }
     }
 }

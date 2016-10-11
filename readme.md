@@ -6,13 +6,13 @@
 
 本地搭建：
 ```
-git clone https://github.com/attendize/attendize attendize
-cd attendize
+git clone https://github.com/yunlugu/newYlg newYlg
+cd newYlg
 cp .env.example .env # 请配置你的env
 # 请先手动创建相应的空数据库再进行下一步
 # then
 composer install
-php artisan attendize:install
+php artisan ylg:install
 ```
 
 
