@@ -18,14 +18,14 @@ class Install extends Command
      *
      * @var string
      */
-    protected $signature = 'attendize:install';
+    protected $signature = 'ylg:install';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Install Attendize';
+    protected $description = 'Install Ylg';
 
     /**
      * Execute the console command.
@@ -45,7 +45,7 @@ class Install extends Command
         }
 
         $this->comment('--------------------');
-        $this->comment('Attempting to install Attendize v'.$version);
+        $this->comment('Attempting to install Ylg v'.$version);
         $this->comment('--------------------');
 
 
@@ -78,21 +78,18 @@ class Install extends Command
                 $this->comment('Please create an admin user.');
                 $this->comment('--------------------');
                 //Create the first user
-                $fname = $this->ask('Enter first name:');
-                $lname = $this->ask('Enter last name:');
+                $fname = $this->ask('Enter your name:');
                 $email = $this->ask('Enter your email:');
                 $password = $this->secret('Enter a password:');
 
                 $account_data['email'] = $email;
-                $account_data['first_name'] = $fname;
-                $account_data['last_name'] = $lname;
+                $account_data['full_name'] = $fname;
                 $account_data['currency_id'] = config('attendize.default_currency');
                 $account_data['timezone_id'] = config('attendize.default_timezone');
                 $account = Account::create($account_data);
 
                 $user_data['email'] = $email;
-                $user_data['first_name'] = $fname;
-                $user_data['last_name'] = $lname;
+                $user_data['full_name'] = $fname;
 
                 $user_data['password'] = Hash::make($password);
                 $user_data['account_id'] = $account->id;
@@ -115,14 +112,14 @@ class Install extends Command
         file_put_contents(base_path('installed'), $version);
 
         $this->comment("
-          _   _                 _ _         
-     /\  | | | |               | (_)        
-    /  \ | |_| |_ ___ _ __   __| |_ _______ 
-   / /\ \| __| __/ _ \ '_ \ / _` | |_  / _ \
-  / ____ \ |_| ||  __/ | | | (_| | |/ /  __/
- /_/    \_\__|\__\___|_| |_|\__,_|_/___\___|
+        ╭╮╱╱╭┳╮╱╱╭━━━╮
+        ┃╰╮╭╯┃┃╱╱┃╭━╮┃
+        ╰╮╰╯╭┫┃╱╱┃┃╱╰╯
+        ╱╰╮╭╯┃┃╱╭┫┃╭━╮
+        ╱╱┃┃╱┃╰━╯┃╰┻━┃
+        ╱╱╰╯╱╰━━━┻━━━╯
         ");
 
-        $this->comment('Success! You can now run Attendize');
+        $this->comment('Success! You can now run ylg');
     }
 }
